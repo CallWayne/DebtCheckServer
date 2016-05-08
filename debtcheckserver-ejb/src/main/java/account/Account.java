@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import Claim.Claim;
 import debt.Debt;
 
 public class Account implements Serializable {
@@ -16,16 +17,22 @@ public class Account implements Serializable {
 	private String userName;
 	private String password;
 	private HashMap<Integer,Debt> debts;
+	private HashMap<Integer,Claim> claims;
 	
 	public Account (String userName, String password){
 		this.id = lastID++;
 		this.userName = userName;
 		this.password = password;
 		this.debts = new HashMap<>();
+		this.claims = new HashMap<>();
 	}
 	
 	public void addNewDebt(Debt newDebt) {
 		this.debts.put(newDebt.getId(), newDebt);
+	}
+	
+	public void addNewClaim(Claim newClaim) {
+		this.claims.put(newClaim.getId(), newClaim);
 	}
 	
 	public String getUserName() {
@@ -42,6 +49,14 @@ public class Account implements Serializable {
 
 	public List<Debt> getDebts() {
 		return new ArrayList<Debt>(debts.values());
+	}
+	
+	public Claim getClaimById(int ClaimId) {
+		return claims.get(ClaimId);
+	}
+
+	public List<Claim> getClaim() {
+		return new ArrayList<Claim>(claims.values());
 	}
 
 	public int getId() {
