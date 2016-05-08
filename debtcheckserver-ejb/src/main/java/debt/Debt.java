@@ -11,12 +11,12 @@ public class Debt implements Serializable {
 	private static int lastID=0;
 	
 	private int id;
-	private BigDecimal balance;
+	private BigDecimal amount;
 	private Account owner;
 	
-	public Debt(Account owner) {
+	public Debt(Account owner, BigDecimal amount) {
 		this.id = ++lastID;
-		this.balance = BigDecimal.ZERO;
+		this.amount = amount;
 		this.owner = owner;
 		this.owner.addNewDebt(this);
 	}
@@ -25,8 +25,8 @@ public class Debt implements Serializable {
 		return id;
 	}
 	
-	public BigDecimal getBalance() {
-		return balance;
+	public BigDecimal getAmount() {
+		return amount;
 	}
 	
 	public Account getOwner() {
@@ -34,15 +34,15 @@ public class Debt implements Serializable {
 	}
 	
 	public void increase(BigDecimal amount) {
-		this.balance = this.balance.add(amount);
+		this.amount = this.amount.add(amount);
 	}
 	
 	public void decrease(BigDecimal amount) {
-		this.balance = this.balance.subtract(amount);
+		this.amount = this.amount.subtract(amount);
 	}
 	
 	public String toString() {
-		return "Debt " + this.id + " (Balance=" + this.balance + ", Owner=" + this.getOwner().getUserName() + ")";
+		return "Debt " + this.id + " (Amount=" + this.amount + ", Owner=" + this.getOwner().getUserName() + ")";
 	}
 
 }
