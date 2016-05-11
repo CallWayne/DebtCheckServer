@@ -1,15 +1,15 @@
 package DebtCheckOnline;
 
+import java.math.BigDecimal;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
 
-import account.AccountRegistry;
-import de.xbank.banking.Account;
-import de.xbank.dto.TransferMoneyResponse;
-import de.xbank.onlinebanking.XbankException;
-import de.xbank.session.XbankSession;
-
+import Claim.Claim;
+import DebtCheckSession.DebtCheckSession;
+import account.Account;
+import debt.Debt;
 
 
 
@@ -17,29 +17,35 @@ import de.xbank.session.XbankSession;
 @Stateless
 public class DebtCheckOnlineIntegration {
 	
-	@EJB
-	private AccountRegistry accountRegistry;
+	private DebtCheckSession getSession(int sessionId) throws NoSessionException {
+		DebtCheckSession session = dao.findSessionById(sessionId);
+		if (session==null)
+			throw new NoSessionException("Bitte zunächst ein Login durchführen.");
+		else
+			return session;
+	}
+
 	
-	
-	//Hier fehlt noch Session glaube ich (auch als Parameterübergabe) und ?Response?
-	public DebtAddedResponse addNewDebt (int SourceAccount, int targetAccount, BigDecimal amount){
+	//Hier fehlt noch Response glaube ich (auch als Rückgabewert)
+	public void addNewDebt (int sessionId, int sourceAccount, int targetAccount, BigDecimal amount){
 		//TransferMoneyResponse response = new TransferMoneyResponse();
 		try {
-			//DebtCheckSession session = getSession(sessionId);
-			//Account source = session.getUser().getAccountById(sourceAccount);
-			Account target = this.accountRegistry.findAccountById(targetAccount);
+			DebtCheckSession session = getSession(sessionId);
+			Account source = session.getUser();
+			Account target = this.dao.findAccountById(targetAccount);
 			if (source!=null && target!=null) {
 				new Claim(source, amount);
 				new Debt(target, amount);
 				//response.setNewBalance(source.getBalance());
 			}
 		}
-		//catch (DebtCheckException e) {
+		catch (DebtCheckException e) {
 			//response.setReturnCode(e.getErrorCode());
 			//response.setMessage(e.getMessage());
 		}
 		//return response;
 	}
-	}
-
 }
+	
+
+
