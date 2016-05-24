@@ -8,13 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import de.debtcheck.entities.*;
 
+@Entity
 public class claim implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private static int lastID=0;
-	
+
+	@Id @GeneratedValue
 	private int id;
 	private BigDecimal amount;
+	@ManyToOne
 	private account owner;
 	
 	public claim(account owner, BigDecimal amount) {
