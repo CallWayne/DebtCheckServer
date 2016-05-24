@@ -19,17 +19,16 @@
 
             <dependency>
                 <groupId>com.group7.debtcheckserver</groupId>
-                <artifactId>${project.artifactId}-ejb</artifactId>
+                <artifactId>debtcheckserver-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>
 
             <dependency>
                 <groupId>com.group7.debtcheckserver</groupId>
-                <artifactId>${project.artifactId}-web</artifactId>
+                <artifactId>debtcheckserver-web</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
-                <scope>compile</scope>
             </dependency>
 
             <dependency>

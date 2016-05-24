@@ -3,6 +3,10 @@ package debt;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 import account.Account;
 
 public class Debt implements Serializable {
@@ -10,9 +14,13 @@ public class Debt implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static int lastID=0;
 	
+	@Id @GeneratedValue
 	private int id;
 	private BigDecimal amount;
+	@ManyToOne
 	private Account owner;
+	
+	public Debt(){};
 	
 	public Debt(Account owner, BigDecimal amount) {
 		this.id = ++lastID;

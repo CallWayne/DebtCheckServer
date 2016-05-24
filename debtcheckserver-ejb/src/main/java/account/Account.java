@@ -5,15 +5,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import Claim.Claim;
 import debt.Debt;
 
+@Entity
 public class Account implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private static int lastID = 0;
 	
+	@Id @GeneratedValue
 	private int id;
+	@Column(unique=true, nullable=false)
 	private String userName;
 	private String password;
 	private HashMap<Integer,Debt> debts;

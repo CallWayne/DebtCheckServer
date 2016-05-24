@@ -2,12 +2,18 @@ package DebtCheckSession;
 
 import java.util.Date;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 import account.Account;
 
 
 public class DebtCheckSession {
 	
+	@Id @GeneratedValue
 	private int id;
+	@ManyToOne
 	private Account user;
 	private Date creationTime;
 
