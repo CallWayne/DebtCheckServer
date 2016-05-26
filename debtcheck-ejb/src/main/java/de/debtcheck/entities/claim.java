@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import de.debtcheck.entities.*;
+
 
 @Entity
 public class claim implements Serializable {
@@ -19,6 +19,8 @@ public class claim implements Serializable {
 	private BigDecimal amount;
 	@ManyToOne
 	private account owner;
+	
+	public claim() {}
 	
 	public claim(account owner, BigDecimal amount) {
 		this.id = ++lastID;

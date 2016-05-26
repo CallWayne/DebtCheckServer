@@ -3,8 +3,10 @@ package de.debtcheck.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,9 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
-import de.debtcheck.entities.*;
 
 @Entity
 public class account implements Serializable {
@@ -33,8 +36,14 @@ public class account implements Serializable {
 	private Map<account,debt> debts;
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="owner") @MapKey
 	private Map<account,claim> claims;
-	//@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="email") @MapKey
-	private ArrayList<account> friends;
+	
+	@ManyToOne
+	@JoinColumn(name = "parentId" )
+	private account parent;
+	@OneToMany(mappedBy="parent") 
+	private Set<account> friends;
+	
+	public account (){}
 	
 	public account (String userName, String password, String email){
 		this.id = lastID++;
@@ -42,7 +51,7 @@ public class account implements Serializable {
 		this.password = password;
 		this.debts = new HashMap<>();
 		this.claims = new HashMap<>();
-		this.friends = new ArrayList<>();
+		this.friends = new HashSet<>();
 		this.email = email;
 	}
 	
@@ -83,7 +92,7 @@ public class account implements Serializable {
 		this.id = accountId;
 	}
 	
-	public List<account> getFriends(){
+	public Set<account> getFriends(){
 		return friends;
 	}
 	
