@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 
 
-public class addNewDebtResponse extends ReturnCodeResponse {
+public class AddNewDebtResponsee extends ReturnCodeResponse {
 
 
 	/**
@@ -14,7 +14,7 @@ public class addNewDebtResponse extends ReturnCodeResponse {
 	
 	private BigDecimal newAmount;
 	
-	public addNewDebtResponse() {
+	public AddNewDebtResponsee() {
 	}
 
 	public BigDecimal getNewAmount() {

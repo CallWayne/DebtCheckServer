@@ -8,18 +8,18 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class session {
+public class Session {
 
 	@Id @GeneratedValue
 	private int id;
 	@ManyToOne
-	private account user;
+	private Account user;
 	private Date creationTime;
 	
-	public session() {	}
+	public Session() {	}
 	
 	
-	public session(account user) {
+	public Session(Account user) {
 		this.user = user;
 		this.creationTime = new Date();
 	}
@@ -32,11 +32,11 @@ public class session {
 		this.id = id;
 	}
 
-	public account getUser() {
+	public Account getUser() {
 		return user;
 	}
 
-	public void setUser(account user) {
+	public void setUser(Account user) {
 		this.user = user;
 	}
 

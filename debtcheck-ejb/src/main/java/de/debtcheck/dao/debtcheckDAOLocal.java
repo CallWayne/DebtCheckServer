@@ -8,9 +8,9 @@ import de.debtcheck.entities.*;
 @Local
 public interface debtcheckDAOLocal {
 	
-	public session findSessionById(int id);
-	public int createSession(account user);
+	public Session findSessionById(int id);
+	public int createSession(Account user);
 	public void closeSession(int id);
-	public account findAccountByName(String username);
+	public Account findAccountByName(String username);
 	
 }

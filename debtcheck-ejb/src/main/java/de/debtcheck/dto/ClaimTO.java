@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 
 
-public class DebtTO extends DataTransferObject {
+public class ClaimTO extends DataTransferObject {
 	
 	private static final long serialVersionUID = 3440740273700082798L;
 	
@@ -13,10 +13,10 @@ public class DebtTO extends DataTransferObject {
 	private int ownerId;
 	
 	
-	public DebtTO() {
+	public ClaimTO() {
 	}
 
-	public DebtTO(int id, BigDecimal amount, int ownerId) {
+	public ClaimTO(int id, BigDecimal amount, int ownerId) {
 		super();
 		this.id = id;
 		this.amount = amount;

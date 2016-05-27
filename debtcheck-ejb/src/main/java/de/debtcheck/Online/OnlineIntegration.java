@@ -1,6 +1,8 @@
 package de.debtcheck.Online;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebService;
@@ -8,14 +10,17 @@ import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
 
 import de.debtcheck.dao.debtcheckDAOLocal;
+import de.debtcheck.dto.ClaimListResponse;
+import de.debtcheck.dto.DebtListResponse;
 import de.debtcheck.dto.DtoAssembler;
 import de.debtcheck.dto.ReturnCodeResponse;
 import de.debtcheck.dto.UserLoginResponse;
-import de.debtcheck.dto.addNewDebtResponse;
-import de.debtcheck.entities.account;
-import de.debtcheck.entities.claim;
-import de.debtcheck.entities.debt;
-import de.debtcheck.entities.session;
+import de.debtcheck.dto.AddNewDebtResponsee;
+import de.debtcheck.entities.Account;
+import de.debtcheck.entities.Claim;
+import de.debtcheck.entities.Debt;
+import de.debtcheck.entities.Session;
+
 
 
 
@@ -32,8 +37,8 @@ private debtcheckDAOLocal dao;
 @EJB
 private DtoAssembler dtoAssembler;
 
-private session getSession(int sessionId) throws NoSessionException {
-	session session = dao.findSessionById(sessionId);
+private Session getSession(int sessionId) throws NoSessionException {
+	Session session = dao.findSessionById(sessionId);
 	if (session==null)
 		throw new NoSessionException("Bitte zunächst ein Login durchführen.");
 	else
@@ -43,7 +48,7 @@ private session getSession(int sessionId) throws NoSessionException {
 public UserLoginResponse login(String username, String password) {
 	UserLoginResponse response = new UserLoginResponse();
 	try {
-		account user = this.dao.findAccountByName(username);
+		Account user = this.dao.findAccountByName(username);
 		if (user != null && user.getPassword().equals(password)) {
 			int sessionId = dao.createSession(user);
 			response.setSessionId(sessionId);
@@ -52,7 +57,7 @@ public UserLoginResponse login(String username, String password) {
 		}
 		else {
 			logger.info("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
-			throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username="+username);
+			throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
 		}
 	}
 	catch (DebtCheckException e) {
@@ -69,15 +74,46 @@ public ReturnCodeResponse logout(int sessionId) {
 	return response;
 	}
 
-public addNewDebtResponse addNewDebt (int sessionId, int sourceAccount, String targetAccount, BigDecimal amount){
-	addNewDebtResponse response = new addNewDebtResponse();
+public DebtListResponse getMyDebts(int sessionId) {
+	DebtListResponse response = new DebtListResponse();
 	try {
-		session session = getSession(sessionId);
-		account source = session.getUser();
-		account target = this.dao.findAccountByName(targetAccount);
+		Session session = getSession(sessionId);
+		List<Debt> accountList = session.getUser().getDebts();
+		response.setDebtList(dtoAssembler.makeDebtDTO(accountList));
+		logger.info("Result of getMyAccounts(): "+accountList);		
+	}
+	catch (DebtCheckException e) {
+		response.setReturnCode(e.getErrorCode());
+		response.setMessage(e.getMessage());
+	}
+	return response;
+}
+
+public ClaimListResponse getMyClaims(int sessionId) {
+	ClaimListResponse response = new ClaimListResponse();
+	try {
+		Session session = getSession(sessionId);
+		List<Claim> accountList = session.getUser().getClaims();
+		response.setClaimList(dtoAssembler.makeClaimDTO(accountList));
+		logger.info("Result of getMyClaims(): "+accountList);		
+	}
+	catch (DebtCheckException e) {
+		response.setReturnCode(e.getErrorCode());
+		response.setMessage(e.getMessage());
+	}
+	return response;
+}
+
+
+public AddNewDebtResponsee addNewDebt (int sessionId, String targetAccount, BigDecimal amount){
+	AddNewDebtResponsee response = new AddNewDebtResponsee();
+	try {
+		Session session = getSession(sessionId);
+		Account source = session.getUser();
+		Account target = this.dao.findAccountByName(targetAccount);
 		if (source!=null && target!=null) {
-			claim claim = new claim(source, amount);
-			new debt(target, amount);
+			Claim claim = new Claim(source, amount);
+			new Debt(target, amount);
 			response.setNewAmount(claim.getAmount());
 		}
 	}

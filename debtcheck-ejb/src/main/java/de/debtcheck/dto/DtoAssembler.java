@@ -5,30 +5,47 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
-import de.debtcheck.entities.account;
-import de.debtcheck.entities.debt;
+import de.debtcheck.entities.Account;
+import de.debtcheck.entities.Claim;
+import de.debtcheck.entities.Debt;
 
 
 @Stateless
 public class DtoAssembler {
 
-  public DebtTO makeDTO(debt debt) {
+  public DebtTO makeDTO(Debt debt) {
 	  DebtTO dto = new DebtTO();
 	  dto.setId(debt.getId());
-	  dto.setBalance(debt.getAmount());
+	  dto.setAmount(debt.getAmount());
 	  dto.setOwnerId(debt.getOwner().getId());
 	  return dto;
   }
+  
+  public ClaimTO makeDTO(Claim claim) {
+	  ClaimTO dto = new ClaimTO();
+	  dto.setId(claim.getId());
+	  dto.setAmount(claim.getAmount());
+	  dto.setOwnerId(claim.getOwner().getId());
+	  return dto;
+  }
 	
-  public List<DebtTO> makeDTO(List<debt> accounts) {
+  public List<DebtTO> makeDebtDTO(List<Debt> debts) {
 	  ArrayList<DebtTO> dtoList = new ArrayList<>();
-	  for (debt d : accounts) {
+	  for (Debt d : debts) {
 		  dtoList.add(this.makeDTO(d));
 	  }
 	  return dtoList;
   }
 
-  public AccountTO makeDTO(account account) {
+  public List<ClaimTO> makeClaimDTO(List<Claim> claims) {
+	  ArrayList<ClaimTO> dtoList = new ArrayList<>();
+	  for (Claim c : claims) {
+		  dtoList.add(this.makeDTO(c));
+	  }
+	  return dtoList;
+  }
+  
+  public AccountTO makeDTO(Account account) {
 	  AccountTO dto = new AccountTO();
 	  dto.setPassword(account.getPassword());
 	  dto.setUserName(account.getUserName());

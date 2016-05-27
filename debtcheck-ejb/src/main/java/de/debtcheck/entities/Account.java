@@ -20,7 +20,7 @@ import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 
 @Entity
-public class account implements Serializable {
+public class Account implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private static int lastID = 0;
@@ -33,19 +33,19 @@ public class account implements Serializable {
 	private String email;
 	private String password;
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="owner") @MapKey
-	private Map<account,debt> debts;
+	private Map<Account,Debt> debts;
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="owner") @MapKey
-	private Map<account,claim> claims;
+	private Map<Account,Claim> claims;
 	
 	@ManyToOne
 	@JoinColumn(name = "parentId" )
-	private account parent;
+	private Account parent;
 	@OneToMany(mappedBy="parent") 
-	private Set<account> friends;
+	private Set<Account> friends;
 	
-	public account (){}
+	public Account (){}
 	
-	public account (String userName, String password, String email){
+	public Account (String userName, String password, String email){
 		this.id = lastID++;
 		this.userName = userName;
 		this.password = password;
@@ -55,11 +55,11 @@ public class account implements Serializable {
 		this.email = email;
 	}
 	
-	public void addNewDebt(account friend, debt newDebt) {
+	public void addNewDebt(Account friend, Debt newDebt) {
 		this.debts.put(friend, newDebt);
 	}
 	
-	public void addNewClaim(claim newClaim) {
+	public void addNewClaim(Claim newClaim) {
 		this.claims.put(this, newClaim);
 	}
 	
@@ -72,18 +72,18 @@ public class account implements Serializable {
 	public String getEmail() {
 		return this.email;
 	}
-	public debt getDebtById(int debtId) {
+	public Debt getDebtById(int debtId) {
 		return debts.get(debtId);
 	}
-	public List<debt> getDebts() {
-		return new ArrayList<debt>(debts.values());
+	public List<Debt> getDebts() {
+		return new ArrayList<Debt>(debts.values());
 	}
 	
-	public claim getClaimById(int ClaimId) {
+	public Claim getClaimById(int ClaimId) {
 		return claims.get(ClaimId);
 	}
-	public List<claim> getClaim() {
-		return new ArrayList<claim>(claims.values());
+	public List<Claim> getClaims() {
+		return new ArrayList<Claim>(claims.values());
 	}
 	public int getId() {
 		return id;
@@ -92,7 +92,7 @@ public class account implements Serializable {
 		this.id = accountId;
 	}
 	
-	public Set<account> getFriends(){
+	public Set<Account> getFriends(){
 		return friends;
 	}
 	

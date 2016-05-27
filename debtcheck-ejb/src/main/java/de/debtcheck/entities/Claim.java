@@ -7,27 +7,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import de.debtcheck.entities.account;
 
 @Entity
-public class debt implements Serializable {
+public class Claim implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private static int lastID=0;
-	
+
 	@Id @GeneratedValue
 	private int id;
 	private BigDecimal amount;
 	@ManyToOne
-	private account owner;
+	private Account owner;
 	
-	public debt(){};
+	public Claim() {}
 	
-	public debt(account owner, BigDecimal amount) {
+	public Claim(Account owner, BigDecimal amount) {
 		this.id = ++lastID;
 		this.amount = amount;
 		this.owner = owner;
-		//this.owner.addNewDebt(this);
+		this.owner.addNewClaim(this);
 	}
 	
 	public int getId() {
@@ -38,7 +37,7 @@ public class debt implements Serializable {
 		return amount;
 	}
 	
-	public account getOwner() {
+	public Account getOwner() {
 		return owner;
 	}
 	

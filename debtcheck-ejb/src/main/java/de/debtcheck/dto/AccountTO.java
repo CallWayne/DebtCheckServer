@@ -2,8 +2,8 @@ package de.debtcheck.dto;
 
 import java.util.HashMap;
 
-import de.debtcheck.entities.claim;
-import de.debtcheck.entities.debt;
+import de.debtcheck.entities.Claim;
+import de.debtcheck.entities.Debt;
 
 
 public class AccountTO extends DataTransferObject{
@@ -16,14 +16,14 @@ public class AccountTO extends DataTransferObject{
 	private int id;
 	private String userName;
 	private String password;
-	private HashMap<Integer,debt> debts;
-	private HashMap<Integer,claim> claims;
+	private HashMap<Integer,Debt> debts;
+	private HashMap<Integer,Claim> claims;
 	
 	public AccountTO()  {
 	}
 	
 	public AccountTO(int id, String userName, String password,
-			HashMap<Integer, debt> debts, HashMap<Integer, claim> claims ) {
+			HashMap<Integer, Debt> debts, HashMap<Integer, Claim> claims ) {
 		super();
 		this.id = id;
 		this.userName = userName;
@@ -56,19 +56,19 @@ public class AccountTO extends DataTransferObject{
 		this.password = password;
 	}
 
-	public HashMap<Integer, debt> getDebts() {
+	public HashMap<Integer, Debt> getDebts() {
 		return debts;
 	}
 
-	public void setDebts(HashMap<Integer, debt> debts) {
+	public void setDebts(HashMap<Integer, Debt> debts) {
 		this.debts = debts;
 	}
 	
-	public HashMap<Integer, claim> getClaims() {
+	public HashMap<Integer, Claim> getClaims() {
 		return claims;
 	}
 	
-	public void setClaims(HashMap<Integer, claim> claims) {
+	public void setClaims(HashMap<Integer, Claim> claims) {
 		this.claims = claims;
 	}
 	

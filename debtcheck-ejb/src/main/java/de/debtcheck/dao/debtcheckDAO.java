@@ -6,8 +6,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import de.debtcheck.entities.account;
-import de.debtcheck.entities.session;
+import de.debtcheck.entities.Account;
+import de.debtcheck.entities.Session;
 
 
 
@@ -17,29 +17,29 @@ public class debtcheckDAO implements debtcheckDAOLocal {
 	@PersistenceContext
 	EntityManager em;
 
-	public session findSessionById(int id) {
-    	return em.find(session.class, id);
+	public Session findSessionById(int id) {
+    	return em.find(Session.class, id);
     }
 	
-	public int createSession(account user) {
-        session newSession = new session(user);
+	public int createSession(Account user) {
+        Session newSession = new Session(user);
         em.persist(newSession);
         return newSession.getId();
     }
 	
 	public void closeSession(int id) {
-    	session session = em.find(session.class, id);
+    	Session session = em.find(Session.class, id);
     	if (session != null) {
     		em.remove(session);
     	}
     }
 	
-	public account findAccountByName(String userName) {
+	public Account findAccountByName(String userName) {
     	List results = em.createQuery("SELECT a FROM Account a WHERE a.userName LIKE :accName")
     	                 .setParameter("accName", userName)
     	                 .getResultList();
     	if (results.size()==1) {
-    	    return (account) results.get(0);
+    	    return (Account) results.get(0);
     	}
     	else {
     		return null;
