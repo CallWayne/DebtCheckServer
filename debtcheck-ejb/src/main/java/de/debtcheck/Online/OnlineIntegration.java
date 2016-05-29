@@ -13,6 +13,7 @@ import de.debtcheck.dao.debtcheckDAOLocal;
 import de.debtcheck.dto.ClaimListResponse;
 import de.debtcheck.dto.DebtListResponse;
 import de.debtcheck.dto.DtoAssembler;
+import de.debtcheck.dto.PayDebtResponsee;
 import de.debtcheck.dto.ReturnCodeResponse;
 import de.debtcheck.dto.UserLoginResponse;
 import de.debtcheck.dto.AddNewDebtResponsee;
@@ -105,15 +106,17 @@ public ClaimListResponse getMyClaims(int sessionId) {
 }
 
 
-public AddNewDebtResponsee addNewDebt (int sessionId, String targetAccount, BigDecimal amount){
+public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigDecimal amount){
 	AddNewDebtResponsee response = new AddNewDebtResponsee();
 	try {
 		Session session = getSession(sessionId);
-		Account source = session.getUser();
-		Account target = this.dao.findAccountByName(targetAccount);
-		if (source!=null && target!=null) {
-			Claim claim = new Claim(source, amount);
-			new Debt(target, amount);
+		Account creditor = session.getUser();
+		Account debtor = this.dao.findAccountByName(debtorAccount);
+		if (creditor!=null && debtor!=null) {
+			Claim claim = new Claim(creditor, debtor, amount);
+			Debt debt = new Debt(debtor, creditor, amount);
+			creditor.addNewClaim(claim);
+			debtor.addNewDebt(debt);
 			response.setNewAmount(claim.getAmount());
 		}
 	}
@@ -122,5 +125,36 @@ public AddNewDebtResponsee addNewDebt (int sessionId, String targetAccount, BigD
 		response.setMessage(e.getMessage());
 	}
 	return response;
+	}
+
+public PayDebtResponsee payDebt (int sessionId, String creditorAccount, BigDecimal amount, int id){
+	PayDebtResponsee response = new PayDebtResponsee();
+	try{
+		Session session = getSession(sessionId);
+		Account debtor = session.getUser();
+		Account creditor = this.dao.findAccountByName(creditorAccount);
+		if (debtor!=null && creditor!=null){
+			Claim claim = creditor.getClaimById(id);
+			Debt debt = debtor.getDebtById(id);
+			BigDecimal debtHeight = debt.getAmount();
+			int compare = debtHeight.compareTo(amount);
+			if(compare == 0){
+				debtor.removeDebt(id);
+				creditor.removeClaim(id);
+				response.setNewAmount(new BigDecimal(0));
+			}
+			if(compare == 1){
+				debt.decrease(amount);
+				claim.decrease(amount);
+				response.setNewAmount(claim.getAmount());
+			}
+			return response;
+		}
+	}
+		catch (DebtCheckException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+			return response;
 	}
 }

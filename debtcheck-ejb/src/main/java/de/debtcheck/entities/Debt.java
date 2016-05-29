@@ -19,15 +19,16 @@ public class Debt implements Serializable {
 	private int id;
 	private BigDecimal amount;
 	@ManyToOne
-	private Account owner;
+	private Account debtor;
+	private Account creditor;
 	
 	public Debt(){};
 	
-	public Debt(Account owner, BigDecimal amount) {
+	public Debt(Account debtor, Account creditor, BigDecimal amount) {
 		this.id = ++lastID;
 		this.amount = amount;
-		this.owner = owner;
-		//this.owner.addNewDebt(this);
+		this.debtor = debtor;
+		this.creditor = creditor;
 	}
 	
 	public int getId() {
@@ -38,8 +39,12 @@ public class Debt implements Serializable {
 		return amount;
 	}
 	
-	public Account getOwner() {
-		return owner;
+	public Account getCreditor() {
+		return creditor;
+	}
+	
+	public Account getDebtor() {
+		return debtor;
 	}
 	
 	public void increase(BigDecimal amount) {
@@ -51,6 +56,6 @@ public class Debt implements Serializable {
 	}
 	
 	public String toString() {
-		return "Debt " + this.id + " (Amount=" + this.amount + ", Owner=" + this.getOwner().getUserName() + ")";
+		return "Debt " + this.id + " (Amount=" + this.amount + ", Owner=" + this.getDebtor().getUserName() + ")";
 	}
 }

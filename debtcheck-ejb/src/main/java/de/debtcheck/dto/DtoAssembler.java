@@ -17,7 +17,7 @@ public class DtoAssembler {
 	  DebtTO dto = new DebtTO();
 	  dto.setId(debt.getId());
 	  dto.setAmount(debt.getAmount());
-	  dto.setOwnerId(debt.getOwner().getId());
+	  dto.setOwnerId(debt.getDebtor().getId());
 	  return dto;
   }
   
@@ -25,7 +25,7 @@ public class DtoAssembler {
 	  ClaimTO dto = new ClaimTO();
 	  dto.setId(claim.getId());
 	  dto.setAmount(claim.getAmount());
-	  dto.setOwnerId(claim.getOwner().getId());
+	  dto.setOwnerId(claim.getCreditor().getId());
 	  return dto;
   }
 	

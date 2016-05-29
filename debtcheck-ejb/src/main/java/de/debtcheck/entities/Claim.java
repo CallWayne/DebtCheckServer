@@ -18,15 +18,16 @@ public class Claim implements Serializable {
 	private int id;
 	private BigDecimal amount;
 	@ManyToOne
-	private Account owner;
+	private Account creditor;
+	private Account debtor;
 	
 	public Claim() {}
 	
-	public Claim(Account owner, BigDecimal amount) {
+	public Claim(Account creditor, Account debtor, BigDecimal amount) {
 		this.id = ++lastID;
 		this.amount = amount;
-		this.owner = owner;
-		this.owner.addNewClaim(this);
+		this.creditor = creditor;
+		this.debtor = debtor;
 	}
 	
 	public int getId() {
@@ -37,8 +38,12 @@ public class Claim implements Serializable {
 		return amount;
 	}
 	
-	public Account getOwner() {
-		return owner;
+	public Account getCreditor() {
+		return creditor;
+	}
+	
+	public Account getDebtor() {
+		return debtor;
 	}
 	
 	public void increase(BigDecimal amount) {
@@ -50,6 +55,6 @@ public class Claim implements Serializable {
 	}
 	
 	public String toString() {
-		return "Debt " + this.id + " (Amount=" + this.amount + ", Owner=" + this.getOwner().getUserName() + ")";
+		return "Debt " + this.id + " (Amount=" + this.amount + ", Owner=" + this.getCreditor().getUserName() + ")";
 	}
 }

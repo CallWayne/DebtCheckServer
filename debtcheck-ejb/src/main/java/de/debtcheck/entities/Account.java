@@ -32,10 +32,10 @@ public class Account implements Serializable {
 	@Column(unique=true, nullable=false)
 	private String email;
 	private String password;
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="owner") @MapKey
-	private Map<Account,Debt> debts;
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="owner") @MapKey
-	private Map<Account,Claim> claims;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="debtor") @MapKey
+	private Map<Integer, Debt> debts;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="creditor") @MapKey
+	private Map<Integer,Claim> claims;
 	
 	@ManyToOne
 	@JoinColumn(name = "parentId" )
@@ -55,39 +55,54 @@ public class Account implements Serializable {
 		this.email = email;
 	}
 	
-	public void addNewDebt(Account friend, Debt newDebt) {
-		this.debts.put(friend, newDebt);
+	public void addNewDebt(Debt newDebt) {
+		this.debts.put(newDebt.getId(), newDebt);
 	}
 	
 	public void addNewClaim(Claim newClaim) {
-		this.claims.put(this, newClaim);
+		this.claims.put(newClaim.getId(), newClaim);
 	}
 	
 	public String getUserName() {
 		return this.userName;
 	}
+	
 	public String getPassword() {
 		return this.password;
 	}
+	
 	public String getEmail() {
 		return this.email;
 	}
+	
 	public Debt getDebtById(int debtId) {
 		return debts.get(debtId);
 	}
+	
 	public List<Debt> getDebts() {
 		return new ArrayList<Debt>(debts.values());
+	}
+	
+	public void removeDebt(int id){
+		debts.remove(id);
 	}
 	
 	public Claim getClaimById(int ClaimId) {
 		return claims.get(ClaimId);
 	}
+	
 	public List<Claim> getClaims() {
 		return new ArrayList<Claim>(claims.values());
 	}
+	
+	public void removeClaim(int id){
+		claims.remove(id);
+	}
+	
 	public int getId() {
 		return id;
 	}
+	
 	public void setId(int accountId) {
 		this.id = accountId;
 	}
