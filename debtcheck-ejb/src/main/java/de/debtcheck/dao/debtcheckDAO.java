@@ -45,5 +45,17 @@ public class debtcheckDAO implements debtcheckDAOLocal {
     		return null;
     	}
     }
+	
+	public Account createAccount(String userName, String password, String email) {
+		if(findAccountByName(userName) == null) {
+			Account user = new Account(userName, password, email);
+			em.persist(user);	
+			return user;
+		}
+		else {
+			//Return null, if username already exists.
+			return null;
+		}
+	}
 
 }

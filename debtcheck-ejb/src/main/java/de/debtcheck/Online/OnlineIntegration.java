@@ -46,6 +46,32 @@ private Session getSession(int sessionId) throws NoSessionException {
 		return session;
 	}
 
+
+public UserLoginResponse registerNewAccount(String userName, String password, String email) {
+	UserLoginResponse response = new UserLoginResponse();
+	try {
+		Account user = dao.createAccount(userName, password, email);		
+		if (user != null) {
+			//create new session for the just created customer:
+			int sessionId = dao.createSession(user);
+			logger.info("Registrierung von \"" + userName + "\" erfolgreich. "
+					  + "Erzeugte Session=" + sessionId);
+			response.setSessionId(sessionId);
+		}
+		else {
+			logger.info("Registrieren fehlgeschlagen, da der Username bereits existiert."
+					  + " username=" + userName);
+			throw new DebtCheckException(30, "Registrieren fehlgeschlagen, da der Username "
+					  + "bereits existiert. username=" + userName);
+		}
+	}
+	catch (DebtCheckException e) {
+		response.setReturnCode(e.getErrorCode());
+		response.setMessage(e.getMessage());
+	}		
+	return response;		
+}
+
 public UserLoginResponse login(String username, String password) {
 	UserLoginResponse response = new UserLoginResponse();
 	try {
@@ -113,8 +139,9 @@ public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigD
 		Account creditor = session.getUser();
 		Account debtor = this.dao.findAccountByName(debtorAccount);
 		if (creditor!=null && debtor!=null) {
-			Claim claim = new Claim(creditor, debtor, amount);
 			Debt debt = new Debt(debtor, creditor, amount);
+			int debtId = debt.getId();
+			Claim claim = new Claim(debtId, creditor, debtor, amount);
 			creditor.addNewClaim(claim);
 			debtor.addNewDebt(debt);
 			response.setNewAmount(claim.getAmount());

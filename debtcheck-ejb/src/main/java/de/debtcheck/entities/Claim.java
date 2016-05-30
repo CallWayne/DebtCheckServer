@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 public class Claim implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private static int lastID=0;
 
 	@Id @GeneratedValue
 	private int id;
@@ -23,8 +22,8 @@ public class Claim implements Serializable {
 	
 	public Claim() {}
 	
-	public Claim(Account creditor, Account debtor, BigDecimal amount) {
-		this.id = ++lastID;
+	public Claim(int id, Account creditor, Account debtor, BigDecimal amount) {
+		this.id = id;
 		this.amount = amount;
 		this.creditor = creditor;
 		this.debtor = debtor;
