@@ -15,11 +15,13 @@ public class Debt implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static int lastID=0;
 	
-	@Id @GeneratedValue
+	@Id 
+	//@GeneratedValue
 	private int id;
 	private BigDecimal amount;
 	@ManyToOne
 	private Account debtor;
+	@ManyToOne
 	private Account creditor;
 	
 	public Debt(){};

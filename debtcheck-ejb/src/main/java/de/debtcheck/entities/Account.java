@@ -25,7 +25,8 @@ public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static int lastID = 0;
 	
-	@Id @GeneratedValue
+	@Id 
+	//@GeneratedValue
 	private int id;
 	@Column(nullable=false)
 	private String userName;
@@ -35,7 +36,7 @@ public class Account implements Serializable {
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="debtor") @MapKey
 	private Map<Integer, Debt> debts;
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="creditor") @MapKey
-	private Map<Integer,Claim> claims;
+	private Map<Integer, Claim> claims;
 	
 	@ManyToOne
 	@JoinColumn(name = "parentId" )

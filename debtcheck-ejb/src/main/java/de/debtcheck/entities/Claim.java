@@ -13,11 +13,13 @@ public class Claim implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue
+	@Id 
+	//@GeneratedValue
 	private int id;
 	private BigDecimal amount;
 	@ManyToOne
 	private Account creditor;
+	@ManyToOne
 	private Account debtor;
 	
 	public Claim() {}
