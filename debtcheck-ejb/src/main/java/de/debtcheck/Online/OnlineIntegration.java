@@ -2,6 +2,7 @@ package de.debtcheck.Online;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -10,15 +11,15 @@ import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
 
 import de.debtcheck.dao.debtcheckDAOLocal;
-import de.debtcheck.dto.ClaimListResponse;
 import de.debtcheck.dto.DebtListResponse;
 import de.debtcheck.dto.DtoAssembler;
+import de.debtcheck.dto.FriendListResponse;
 import de.debtcheck.dto.PayDebtResponsee;
 import de.debtcheck.dto.ReturnCodeResponse;
 import de.debtcheck.dto.UserLoginResponse;
+import de.debtcheck.dto.AddFriendResponsee;
 import de.debtcheck.dto.AddNewDebtResponsee;
 import de.debtcheck.entities.Account;
-import de.debtcheck.entities.Claim;
 import de.debtcheck.entities.Debt;
 import de.debtcheck.entities.Session;
 
@@ -116,12 +117,12 @@ public DebtListResponse getMyDebts(int sessionId) {
 	return response;
 }
 
-public ClaimListResponse getMyClaims(int sessionId) {
-	ClaimListResponse response = new ClaimListResponse();
+public DebtListResponse getMyClaims(int sessionId) {
+	DebtListResponse response = new DebtListResponse();
 	try {
 		Session session = getSession(sessionId);
-		List<Claim> accountList = session.getUser().getClaims();
-		response.setClaimList(dtoAssembler.makeClaimDTO(accountList));
+		List<Debt> accountList = session.getUser().getClaims();
+		response.setDebtList(dtoAssembler.makeDebtDTO(accountList));
 		logger.info("Result of getMyClaims(): "+accountList);		
 	}
 	catch (DebtCheckException e) {
@@ -140,11 +141,9 @@ public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigD
 		Account debtor = this.dao.findAccountByName(debtorAccount);
 		if (creditor!=null && debtor!=null) {
 			Debt debt = new Debt(debtor, creditor, amount);
-			int debtId = debt.getId();
-			Claim claim = new Claim(debtId, creditor, debtor, amount);
-			creditor.addNewClaim(claim);
+			creditor.addNewClaim(debt);
 			debtor.addNewDebt(debt);
-			response.setNewAmount(claim.getAmount());
+			response.setNewAmount(debt.getAmount());
 		}
 	}
 	catch (DebtCheckException e) {
@@ -161,7 +160,6 @@ public PayDebtResponsee payDebt (int sessionId, String creditorAccount, BigDecim
 		Account debtor = session.getUser();
 		Account creditor = this.dao.findAccountByName(creditorAccount);
 		if (debtor!=null && creditor!=null){
-			Claim claim = creditor.getClaimById(id);
 			Debt debt = debtor.getDebtById(id);
 			BigDecimal debtHeight = debt.getAmount();
 			int compare = debtHeight.compareTo(amount);
@@ -172,8 +170,7 @@ public PayDebtResponsee payDebt (int sessionId, String creditorAccount, BigDecim
 			}
 			if(compare == 1){
 				debt.decrease(amount);
-				claim.decrease(amount);
-				response.setNewAmount(claim.getAmount());
+				response.setNewAmount(debt.getAmount());
 			}
 			return response;
 		}
@@ -184,4 +181,40 @@ public PayDebtResponsee payDebt (int sessionId, String creditorAccount, BigDecim
 		}
 			return response;
 	}
+/**
+	public AddFriendResponsee addFriend(int sessionId, String userName){
+		AddFriendResponsee response = new AddFriendResponsee();
+		try{
+			Session session = getSession(sessionId);
+			Account account = session.getUser();
+			Account friend = this.dao.findAccountByName(userName);
+			if(account!=null && friend!= null){
+				account.addFriend(friend);
+				response.setFriendName(friend.getUserName());
+			}
+		}
+			catch (DebtCheckException e) {
+				response.setReturnCode(e.getErrorCode());
+				response.setMessage(e.getMessage());
+			}
+				return response;
+		
+	}
+	
+	public FriendListResponse getMyFriends(int sessionId){
+		FriendListResponse response = new FriendListResponse();
+		try {
+			Session session = getSession(sessionId);
+			Set<Account> friendList = session.getUser().getFriends();
+			response.setFriendList(dtoAssembler.makeAccountDTO(friendList));
+			logger.info("Result of getMyClaims(): "+friendList);		
+		}
+		catch (DebtCheckException e) {
+			response.setReturnCode(e.getErrorCode());
+			response.setMessage(e.getMessage());
+		}
+		return response;
+	}
+	*/
+
 }

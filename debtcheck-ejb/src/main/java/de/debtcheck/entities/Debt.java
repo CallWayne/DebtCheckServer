@@ -3,7 +3,6 @@ package de.debtcheck.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -16,7 +15,6 @@ public class Debt implements Serializable {
 	private static int lastID=0;
 	
 	@Id 
-	//@GeneratedValue
 	private int id;
 	private BigDecimal amount;
 	@ManyToOne

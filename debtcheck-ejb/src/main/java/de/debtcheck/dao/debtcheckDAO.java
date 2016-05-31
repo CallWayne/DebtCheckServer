@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import de.debtcheck.entities.Account;
+import de.debtcheck.entities.Debt;
 import de.debtcheck.entities.Session;
 
 
@@ -16,6 +17,7 @@ public class debtcheckDAO implements debtcheckDAOLocal {
 	
 	@PersistenceContext
 	EntityManager em;
+	private List results;
 
 	public Session findSessionById(int id) {
     	return em.find(Session.class, id);
@@ -45,6 +47,7 @@ public class debtcheckDAO implements debtcheckDAOLocal {
     		return null;
     	}
     }
+	
 	
 	public Account createAccount(String userName, String password, String email) {
 		if(findAccountByName(userName) == null) {
