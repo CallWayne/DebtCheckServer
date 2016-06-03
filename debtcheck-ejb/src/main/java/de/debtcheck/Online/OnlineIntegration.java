@@ -60,9 +60,9 @@ public UserLoginResponse registerNewAccount(String userName, String password, St
 			response.setSessionId(sessionId);
 		}
 		else {
-			logger.info("Registrieren fehlgeschlagen, da der Username bereits existiert."
+			logger.info("Registrieren fehlgeschlagen, da der Username oder Email bereits existiert."
 					  + " username=" + userName);
-			throw new DebtCheckException(30, "Registrieren fehlgeschlagen, da der Username "
+			throw new DebtCheckException(30, "Registrieren fehlgeschlagen, da der Username oder Email "
 					  + "bereits existiert. username=" + userName);
 		}
 	}
@@ -73,10 +73,10 @@ public UserLoginResponse registerNewAccount(String userName, String password, St
 	return response;		
 }
 
-public UserLoginResponse login(String username, String password) {
+public UserLoginResponse login(String email, String password) {
 	UserLoginResponse response = new UserLoginResponse();
 	try {
-		Account user = this.dao.findAccountByName(username);
+		Account user = this.dao.findAccountByEmail(email);
 		if (user != null && user.getPassword().equals(password)) {
 			int sessionId = dao.createSession(user);
 			response.setSessionId(sessionId);
@@ -84,8 +84,8 @@ public UserLoginResponse login(String username, String password) {
 			logger.info("Login erfolgreich.");
 		}
 		else {
-			logger.info("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
-			throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
+			logger.info("Login fehlgeschlagen, da Email unbekannt oder Passwort falsch. email=" + email);
+			throw new InvalidLoginException("Login fehlgeschlagen, da Email unbekannt oder Passwort falsch. email=" + email);
 		}
 	}
 	catch (DebtCheckException e) {

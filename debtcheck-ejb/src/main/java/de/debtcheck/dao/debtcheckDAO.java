@@ -48,9 +48,20 @@ public class debtcheckDAO implements debtcheckDAOLocal {
     	}
     }
 	
+	public Account findAccountByEmail(String email) {
+    	List results = em.createQuery("SELECT a FROM Account a WHERE a.email LIKE :accEmail")
+    	                 .setParameter("accEmail", email)
+    	                 .getResultList();
+    	if (results.size()==1) {
+    	    return (Account) results.get(0);
+    	}
+    	else {
+    		return null;
+    	}
+    }	
 	
 	public Account createAccount(String userName, String password, String email) {
-		if(findAccountByName(userName) == null) {
+		if(findAccountByName(userName) == null && findAccountByEmail(email) == null) {
 			Account user = new Account(userName, password, email);
 			em.persist(user);	
 			return user;

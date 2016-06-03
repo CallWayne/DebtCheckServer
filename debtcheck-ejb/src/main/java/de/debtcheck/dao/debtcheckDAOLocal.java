@@ -12,6 +12,7 @@ public interface debtcheckDAOLocal {
 	public int createSession(Account user);
 	public void closeSession(int id);
 	public Account findAccountByName(String username);
+	public Account findAccountByEmail(String email);
 	public Account createAccount(String userName, String password, String email);
 	
 }

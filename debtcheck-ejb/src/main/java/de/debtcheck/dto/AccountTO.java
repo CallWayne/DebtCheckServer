@@ -15,6 +15,7 @@ public class AccountTO extends DataTransferObject{
 	
 	private int id;
 	private String userName;
+	private String email;
 	private String password;
 	private HashMap<Integer,Debt> debts;
 	private HashMap<Integer,Debt> claims;
@@ -22,11 +23,12 @@ public class AccountTO extends DataTransferObject{
 	public AccountTO()  {
 	}
 	
-	public AccountTO(int id, String userName, String password,
+	public AccountTO(int id, String userName, String email, String password, 
 			HashMap<Integer, Debt> debts, HashMap<Integer, Debt> claims ) {
 		super();
 		this.id = id;
 		this.userName = userName;
+		this.email = email;
 		this.password = password;
 		this.debts = debts;
 		this.claims = claims;
@@ -54,6 +56,14 @@ public class AccountTO extends DataTransferObject{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public HashMap<Integer, Debt> getDebts() {

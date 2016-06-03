@@ -52,7 +52,7 @@ public class Account implements Serializable {
 	
 	public Account (){}
 	
-	public Account (String userName, String password, String email){
+	public Account (String userName, String email, String password){
 		this.id = lastID++;
 		this.userName = userName;
 		this.password = password;
