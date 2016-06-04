@@ -57,6 +57,7 @@ public UserLoginResponse registerNewAccount(String userName, String password, St
 			int sessionId = dao.createSession(user);
 			logger.info("Registrierung von \"" + userName + "\" erfolgreich. "
 					  + "Erzeugte Session=" + sessionId);
+			response.setAccount(this.dtoAssembler.makeDTO(user));
 			response.setSessionId(sessionId);
 		}
 		else {

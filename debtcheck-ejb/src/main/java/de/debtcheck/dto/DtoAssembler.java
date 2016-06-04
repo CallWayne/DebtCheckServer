@@ -33,8 +33,9 @@ public class DtoAssembler {
   
   public AccountTO makeDTO(Account account) {
 	  AccountTO dto = new AccountTO();
-	  dto.setPassword(account.getPassword());
 	  dto.setUserName(account.getUserName());
+	  dto.setPassword(account.getPassword());
+	  dto.setEmail(account.getEmail());  
 	  return dto;
   }
   
