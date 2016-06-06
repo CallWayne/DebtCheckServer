@@ -1,5 +1,6 @@
 package de.debtcheck.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -71,5 +72,19 @@ public class debtcheckDAO implements debtcheckDAOLocal {
 			return null;
 		}
 	}
+	
+	public Debt createDebt(Account debtor, Account creditor, BigDecimal amount, String reason) {
+			Debt debt = new Debt(debtor, creditor, amount, reason);
+			em.persist(debt);	
+			return debt;
+		}
+	
+	public void removeDebt(int debtId) {
+    	Debt debt = em.find(Debt.class, debtId);
+    	if (debt != null) {
+    		em.remove(debt);
+    	}
+	}
+	
 
 }

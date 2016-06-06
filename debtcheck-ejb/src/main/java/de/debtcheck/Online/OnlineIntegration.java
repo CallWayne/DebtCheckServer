@@ -134,14 +134,14 @@ public DebtListResponse getMyClaims(int sessionId) {
 }
 
 
-public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigDecimal amount){
+public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigDecimal amount, String reason){
 	AddNewDebtResponsee response = new AddNewDebtResponsee();
 	try {
 		Session session = getSession(sessionId);
 		Account creditor = session.getUser();
 		Account debtor = this.dao.findAccountByName(debtorAccount);
+		Debt debt = dao.createDebt(debtor, creditor, amount, reason);
 		if (creditor!=null && debtor!=null) {
-			Debt debt = new Debt(debtor, creditor, amount);
 			creditor.addNewClaim(debt);
 			debtor.addNewDebt(debt);
 			response.setNewAmount(debt.getAmount());
@@ -165,6 +165,7 @@ public PayDebtResponsee payDebt (int sessionId, String creditorAccount, BigDecim
 			BigDecimal debtHeight = debt.getAmount();
 			int compare = debtHeight.compareTo(amount);
 			if(compare == 0){
+				this.dao.removeDebt(id);
 				debtor.removeDebt(id);
 				creditor.removeClaim(id);
 				response.setNewAmount(new BigDecimal(0));

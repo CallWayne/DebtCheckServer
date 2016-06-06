@@ -16,6 +16,7 @@ public class Debt implements Serializable {
 	
 	@Id 
 	private int id;
+	private String reason;
 	private BigDecimal amount;
 	@ManyToOne
 	private Account debtor;
@@ -24,11 +25,12 @@ public class Debt implements Serializable {
 	
 	public Debt(){};
 	
-	public Debt(Account debtor, Account creditor, BigDecimal amount) {
+	public Debt(Account debtor, Account creditor, BigDecimal amount, String reason) {
 		this.id = ++lastID;
 		this.amount = amount;
 		this.debtor = debtor;
 		this.creditor = creditor;
+		this.reason = reason;
 	}
 	
 	public int getId() {
@@ -53,6 +55,15 @@ public class Debt implements Serializable {
 	
 	public void decrease(BigDecimal amount) {
 		this.amount = this.amount.subtract(amount);
+	}
+	
+	public String getReason(){
+		return reason;
+	}
+	
+	
+	public void setReason(String reason){
+		this.reason = reason;
 	}
 	
 	public String toString() {

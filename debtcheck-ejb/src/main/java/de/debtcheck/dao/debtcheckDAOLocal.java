@@ -1,5 +1,7 @@
 package de.debtcheck.dao;
 
+import java.math.BigDecimal;
+
 import javax.ejb.Local;
 
 import de.debtcheck.entities.*;
@@ -14,5 +16,10 @@ public interface debtcheckDAOLocal {
 	public Account findAccountByName(String username);
 	public Account findAccountByEmail(String email);
 	public Account createAccount(String userName, String password, String email);
+	public Debt createDebt(Account debtor, Account creditor, BigDecimal amount, String reason);
+	public void removeDebt(int debtId);
 	
 }
+	
+	
+
