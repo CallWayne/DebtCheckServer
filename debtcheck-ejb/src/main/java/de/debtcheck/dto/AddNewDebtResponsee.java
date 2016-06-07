@@ -12,6 +12,7 @@ public class AddNewDebtResponsee extends ReturnCodeResponse {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private DebtTO debt;
 	private BigDecimal newAmount;
 	
 	public AddNewDebtResponsee() {
@@ -23,6 +24,14 @@ public class AddNewDebtResponsee extends ReturnCodeResponse {
 
 	public void setNewAmount(BigDecimal newAmount) {
 		this.newAmount = newAmount;
+	}
+	
+	public DebtTO getDebt() {
+		return this.debt;
+	}
+
+	public void setDebt(DebtTO debt) {
+		this.debt = debt;
 	}
 
 }

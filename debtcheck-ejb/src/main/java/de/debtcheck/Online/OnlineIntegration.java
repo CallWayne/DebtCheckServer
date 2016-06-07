@@ -145,6 +145,7 @@ public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigD
 			creditor.addNewClaim(debt);
 			debtor.addNewDebt(debt);
 			response.setNewAmount(debt.getAmount());
+			response.setDebt(this.dtoAssembler.makeDTO(debt));
 		}
 	}
 	catch (DebtCheckException e) {

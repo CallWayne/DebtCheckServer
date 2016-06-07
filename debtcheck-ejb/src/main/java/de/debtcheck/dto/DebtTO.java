@@ -2,40 +2,31 @@ package de.debtcheck.dto;
 
 import java.math.BigDecimal;
 
+import de.debtcheck.entities.Account;
+
 
 
 public class DebtTO extends DataTransferObject {
 	
 	private static final long serialVersionUID = 3440740273700082798L;
 	
+	
 	private int id;
+	private String reason;
 	private BigDecimal amount;
-	private int ownerId;
-	
-	
-	public DebtTO() {
-	}
+	private String debtor;
+	private String creditor;
 
-	public DebtTO(int id, BigDecimal amount, int ownerId) {
+	
+	
+	public DebtTO() {}
+
+	public DebtTO(String debtor , String creditor, BigDecimal amount, String reason) {
 		super();
-		this.id = id;
+		this.setDebtor(debtor);
+		this.setCreditor(creditor);
 		this.amount = amount;
-		this.ownerId = ownerId;
-	}
-
-
-	public String toString() {
-		return "Account " + this.id + " (Balance=" + this.amount + ", Owner=" + this.getOwnerId() + ")";
-	}
-
-
-	public int getId() {
-		return id;
-	}
-
-
-	public void setId(int id) {
-		this.id = id;
+		this.reason = reason;
 	}
 
 
@@ -47,15 +38,38 @@ public class DebtTO extends DataTransferObject {
 	public void setAmount(BigDecimal balance) {
 		this.amount = balance;
 	}
-
-
-	public int getOwnerId() {
-		return ownerId;
+	
+	public String reason() {
+		return reason;
 	}
 
 
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public String getCreditor() {
+		return creditor;
+	}
+
+	public void setCreditor(String creditor) {
+		this.creditor = creditor;
+	}
+
+	public String getDebtor() {
+		return debtor;
+	}
+
+	public void setDebtor(String debtor) {
+		this.debtor = debtor;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

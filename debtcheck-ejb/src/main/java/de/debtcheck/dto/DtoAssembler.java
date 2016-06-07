@@ -17,8 +17,11 @@ public class DtoAssembler {
   public DebtTO makeDTO(Debt debt) {
 	  DebtTO dto = new DebtTO();
 	  dto.setId(debt.getId());
+	  dto.setReason(debt.getReason());
 	  dto.setAmount(debt.getAmount());
-	  dto.setOwnerId(debt.getDebtor().getId());
+	  dto.setCreditor(debt.getCreditor().getUserName());
+	  dto.setDebtor(debt.getDebtor().getUserName());
+
 	  return dto;
   }
   
