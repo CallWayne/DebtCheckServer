@@ -91,7 +91,6 @@ public class Account implements Serializable {
 	}
 	
 	public void removeDebt(int id){
-		
 		debts.remove(id);
 	}
 	

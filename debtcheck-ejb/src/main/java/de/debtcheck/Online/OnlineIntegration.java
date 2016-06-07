@@ -54,11 +54,9 @@ public UserLoginResponse registerNewAccount(String userName, String password, St
 		Account user = dao.createAccount(userName, password, email);		
 		if (user != null) {
 			//create new session for the just created customer:
-			int sessionId = dao.createSession(user);
-			logger.info("Registrierung von \"" + userName + "\" erfolgreich. "
-					  + "Erzeugte Session=" + sessionId);
+			logger.info("Registrierung von \"" + userName + "\" erfolgreich. ");
 			response.setAccount(this.dtoAssembler.makeDTO(user));
-			response.setSessionId(sessionId);
+			response.setSessionId(0);
 		}
 		else {
 			logger.info("Registrieren fehlgeschlagen, da der Username oder Email bereits existiert."
