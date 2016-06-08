@@ -27,11 +27,12 @@ public class Account implements Serializable {
 	
 	@Id
 	private int id;
-	@Column(nullable=false)
+	@Column(unique=true, nullable=false)
 	private String userName;
+	@Column(nullable=false)
+	private String password;
 	@Column(unique=true, nullable=false)
 	private String email;
-	private String password;
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="debtor") @MapKey
 	private Map<Integer, Debt> debts;
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="creditor") @MapKey
@@ -52,7 +53,7 @@ public class Account implements Serializable {
 	
 	public Account (){}
 	
-	public Account (String userName, String email, String password){
+	public Account (String userName, String password, String email){
 		this.id = lastID++;
 		this.userName = userName;
 		this.password = password;
