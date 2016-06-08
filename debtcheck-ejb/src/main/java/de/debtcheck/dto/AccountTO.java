@@ -15,15 +15,15 @@ public class AccountTO extends DataTransferObject{
 	
 	private int id;
 	private String userName;
-	private String password;
 	private String email;
+	private String password;
 	private HashMap<Integer,Debt> debts;
 	private HashMap<Integer,Debt> claims;
 	
 	public AccountTO()  {
 	}
 	
-	public AccountTO(int id, String userName, String password, String email, 
+	public AccountTO(int id, String userName, String email, String password, 
 			HashMap<Integer, Debt> debts, HashMap<Integer, Debt> claims ) {
 		super();
 		this.id = id;
