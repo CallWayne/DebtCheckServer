@@ -39,6 +39,9 @@ private debtcheckDAOLocal dao;
 @EJB
 private DtoAssembler dtoAssembler;
 
+@EJB
+private OutputRequesterBean outputRequester;
+
 private Session getSession(int sessionId) throws NoSessionException {
 	Session session = dao.findSessionById(sessionId);
 	if (session==null)
@@ -144,6 +147,9 @@ public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigD
 			debtor.addNewDebt(debt);
 			response.setNewAmount(debt.getAmount());
 			response.setDebt(this.dtoAssembler.makeDTO(debt));
+			String message = creditor.getUserName() + " has added a debt for you!";
+			logger.info(message);
+			outputRequester.debtAddNotification(message);
 		}
 	}
 	catch (DebtCheckException e) {

@@ -79,6 +79,11 @@ public class debtcheckDAO implements debtcheckDAOLocal {
 			return debt;
 		}
 	
+	public void refreshDebt(int debtId){
+		Debt debt = em.find(Debt.class, debtId);
+		em.refresh(debt);
+	}
+	
 	public void removeDebt(int debtId) {
     	Debt debt = em.find(Debt.class, debtId);
     	if (debt != null) {
