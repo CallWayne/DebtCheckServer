@@ -26,7 +26,7 @@ public class DebtTO extends DataTransferObject {
 		this.setDebtor(debtor);
 		this.setCreditor(creditor);
 		this.amount = amount;
-		this.reason = reason;
+		this.setReason(reason);
 	}
 
 
@@ -39,10 +39,9 @@ public class DebtTO extends DataTransferObject {
 		this.amount = balance;
 	}
 	
-	public String reason() {
+	public String getReason() {
 		return reason;
 	}
-
 
 	public void setReason(String reason) {
 		this.reason = reason;

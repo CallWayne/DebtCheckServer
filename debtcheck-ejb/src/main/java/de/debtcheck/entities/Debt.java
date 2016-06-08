@@ -61,7 +61,6 @@ public class Debt implements Serializable {
 		return reason;
 	}
 	
-	
 	public void setReason(String reason){
 		this.reason = reason;
 	}
