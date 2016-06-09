@@ -29,7 +29,7 @@ public class OutputRequesterProcessor implements MessageListener {
 	public void onMessage(Message message) {
        try {
     	  TextMessage msg = (TextMessage) message;
-          logger.info("Received message from jms/queue/BankingOutput: " + msg.getText());
+          logger.info("Received message from jms/queue/DebtAddQueue: " + msg.getText());
        }
        catch (JMSException e) {
             throw new EJBException(e);
