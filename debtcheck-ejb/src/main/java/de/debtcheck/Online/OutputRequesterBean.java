@@ -21,7 +21,7 @@ public class OutputRequesterBean {
 	@Resource(mappedName="java:/JmsXA")
 	  private ConnectionFactory jmsFactory;
 	  
-	  @Resource(mappedName="java:/jms/queue/DebtAddQueue")
+	  @Resource(mappedName="java:/jms/queue/AddDebt")
 	  private Queue outputQueue;
 	  
 	  /**
