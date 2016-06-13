@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="e2373fd5-12bb-47ac-a70b-dd65b19c1eea" activeEnvironment="Default" name="debtcheck" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="e6153a77-bfd1-4089-b1af-5fbc9a084da5" wsaVersion="NONE" name="OnlineIntegrationServiceSoapBinding" type="wsdl" bindingName="{http://Online.debtcheck.de/}OnlineIntegrationServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/debtcheck/OnlineIntegration?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/debtcheck/OnlineIntegration?wsdl"><con:part><con:url>http://localhost:8080/debtcheck/OnlineIntegration?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="OnlineIntegrationService" targetNamespace="http://Online.debtcheck.de/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://Online.debtcheck.de/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://Online.debtcheck.de/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="addNewDebt" type="tns:addNewDebt"/>
+      <xs:element name="addNewDebtResponse" type="tns:addNewDebtResponse"/>
+      <xs:element name="getMyClaims" type="tns:getMyClaims"/>
+      <xs:element name="getMyClaimsResponse" type="tns:getMyClaimsResponse"/>
+      <xs:element name="getMyDebts" type="tns:getMyDebts"/>
+      <xs:element name="getMyDebtsResponse" type="tns:getMyDebtsResponse"/>
+      <xs:element name="login" type="tns:login"/>
+      <xs:element name="loginResponse" type="tns:loginResponse"/>
+      <xs:element name="logout" type="tns:logout"/>
+      <xs:element name="logoutResponse" type="tns:logoutResponse"/>
+      <xs:element name="payDebt" type="tns:payDebt"/>
+      <xs:element name="payDebtResponse" type="tns:payDebtResponse"/>
+      <xs:element name="registerNewAccount" type="tns:registerNewAccount"/>
+      <xs:element name="registerNewAccountResponse" type="tns:registerNewAccountResponse"/>
+      <xs:complexType name="registerNewAccount">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="registerNewAccountResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:userLoginResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="userLoginResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:returnCodeResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="account" type="tns:accountTO"/>
+              <xs:element name="sessionId" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="returnCodeResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:dataTransferObject">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="message" type="xs:string"/>
+              <xs:element name="returnCode" type="xs:int"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType abstract="true" name="dataTransferObject">
+        <xs:sequence/>
+      </xs:complexType>
+      <xs:complexType name="accountTO">
+        <xs:complexContent>
+          <xs:extension base="tns:dataTransferObject">
+            <xs:sequence>
+              <xs:element name="claims">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element minOccurs="0" name="key" type="xs:int"/>
+                          <xs:element minOccurs="0" name="value" type="tns:debt"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="debts">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element minOccurs="0" name="key" type="xs:int"/>
+                          <xs:element minOccurs="0" name="value" type="tns:debt"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element minOccurs="0" name="email" type="xs:string"/>
+              <xs:element name="id" type="xs:int"/>
+              <xs:element minOccurs="0" name="password" type="xs:string"/>
+              <xs:element minOccurs="0" name="userName" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="debt">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="reason" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addNewDebt">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addNewDebtResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:addNewDebtResponsee"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addNewDebtResponsee">
+        <xs:complexContent>
+          <xs:extension base="tns:returnCodeResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="debt" type="tns:debtTO"/>
+              <xs:element minOccurs="0" name="newAmount" type="xs:decimal"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="debtTO">
+        <xs:complexContent>
+          <xs:extension base="tns:dataTransferObject">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="amount" type="xs:decimal"/>
+              <xs:element minOccurs="0" name="creditor" type="xs:string"/>
+              <xs:element minOccurs="0" name="debtor" type="xs:string"/>
+              <xs:element name="id" type="xs:int"/>
+              <xs:element minOccurs="0" name="reason" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="getMyDebts">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getMyDebtsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:debtListResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="debtListResponse">
+        <xs:complexContent>
+          <xs:extension base="tns:returnCodeResponse">
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="debtList" nillable="true" type="tns:debtTO"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="logout">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="logoutResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:returnCodeResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="payDebt">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg2" type="xs:decimal"/>
+          <xs:element name="arg3" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="payDebtResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:payDebtResponsee"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="payDebtResponsee">
+        <xs:complexContent>
+          <xs:extension base="tns:returnCodeResponse">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="newAmount" type="xs:decimal"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="login">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="loginResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:userLoginResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getMyClaims">
+        <xs:sequence>
+          <xs:element name="arg0" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getMyClaimsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:debtListResponse"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getMyClaimsResponse">
+    <wsdl:part element="tns:getMyClaimsResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMyDebtsResponse">
+    <wsdl:part element="tns:getMyDebtsResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerNewAccountResponse">
+    <wsdl:part element="tns:registerNewAccountResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logout">
+    <wsdl:part element="tns:logout" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="payDebt">
+    <wsdl:part element="tns:payDebt" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMyClaims">
+    <wsdl:part element="tns:getMyClaims" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerNewAccount">
+    <wsdl:part element="tns:registerNewAccount" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addNewDebt">
+    <wsdl:part element="tns:addNewDebt" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logoutResponse">
+    <wsdl:part element="tns:logoutResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="loginResponse">
+    <wsdl:part element="tns:loginResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMyDebts">
+    <wsdl:part element="tns:getMyDebts" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="payDebtResponse">
+    <wsdl:part element="tns:payDebtResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="login">
+    <wsdl:part element="tns:login" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addNewDebtResponse">
+    <wsdl:part element="tns:addNewDebtResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="OnlineIntegration">
+    <wsdl:operation name="registerNewAccount">
+      <wsdl:input message="tns:registerNewAccount" name="registerNewAccount"></wsdl:input>
+      <wsdl:output message="tns:registerNewAccountResponse" name="registerNewAccountResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addNewDebt">
+      <wsdl:input message="tns:addNewDebt" name="addNewDebt"></wsdl:input>
+      <wsdl:output message="tns:addNewDebtResponse" name="addNewDebtResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMyDebts">
+      <wsdl:input message="tns:getMyDebts" name="getMyDebts"></wsdl:input>
+      <wsdl:output message="tns:getMyDebtsResponse" name="getMyDebtsResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <wsdl:input message="tns:logout" name="logout"></wsdl:input>
+      <wsdl:output message="tns:logoutResponse" name="logoutResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="payDebt">
+      <wsdl:input message="tns:payDebt" name="payDebt"></wsdl:input>
+      <wsdl:output message="tns:payDebtResponse" name="payDebtResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <wsdl:input message="tns:login" name="login"></wsdl:input>
+      <wsdl:output message="tns:loginResponse" name="loginResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMyClaims">
+      <wsdl:input message="tns:getMyClaims" name="getMyClaims"></wsdl:input>
+      <wsdl:output message="tns:getMyClaimsResponse" name="getMyClaimsResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OnlineIntegrationServiceSoapBinding" type="tns:OnlineIntegration">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="registerNewAccount">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="registerNewAccount">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="registerNewAccountResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addNewDebt">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addNewDebt">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addNewDebtResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMyDebts">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getMyDebts">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getMyDebtsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logout">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="logout">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="logoutResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="payDebt">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="payDebt">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="payDebtResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="login">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="loginResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMyClaims">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getMyClaims">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getMyClaimsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OnlineIntegrationService">
+    <wsdl:port binding="tns:OnlineIntegrationServiceSoapBinding" name="OnlineIntegrationPort">
+      <soap:address location="http://localhost:8080/debtcheck/OnlineIntegration"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint></con:endpoints><con:operation id="e3345844-d64a-423d-96b5-eb64fdedf1fb" isOneWay="false" action="" name="addNewDebt" bindingOperationName="addNewDebt" type="Request-Response" outputName="addNewDebtResponse" inputName="addNewDebt" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="c2358dd5-c97f-49d1-8758-4a2e9c061162" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:addNewDebt>
+         <arg0>1</arg0>
+         <!--Optional:-->
+         <arg1>josua1</arg1>
+         <!--Optional:-->
+         <arg2>10.00</arg2>
+         <!--Optional:-->
+         <arg3>test</arg3>
+      </onl:addNewDebt>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://Online.debtcheck.de/OnlineIntegration/addNewDebt"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="8ffd4a0b-1f70-46f1-a64f-ad09b7036d25" isOneWay="false" action="" name="getMyClaims" bindingOperationName="getMyClaims" type="Request-Response" outputName="getMyClaimsResponse" inputName="getMyClaims" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="b52ff731-a9d9-4475-ae87-58b01c8f2fce" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:getMyClaims>
+         <arg0>1</arg0>
+      </onl:getMyClaims>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://Online.debtcheck.de/OnlineIntegration/getMyClaims"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="cc5f87a8-1aab-45fa-b18b-1cb5b5db8aff" isOneWay="false" action="" name="getMyDebts" bindingOperationName="getMyDebts" type="Request-Response" outputName="getMyDebtsResponse" inputName="getMyDebts" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d89cf60b-0a55-4a89-90e4-66304af0dd02" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:getMyDebts>
+         <arg0>?</arg0>
+      </onl:getMyDebts>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://Online.debtcheck.de/OnlineIntegration/getMyDebts"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="9f2f6f5a-0ccd-4d17-aadb-9d6f439eecfa" isOneWay="false" action="" name="login" bindingOperationName="login" type="Request-Response" outputName="loginResponse" inputName="login" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="314abddc-f086-46b3-99c4-9ef91425b97c" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:login>
+         <!--Optional:-->
+         <arg0>eins@web.de</arg0>
+         <!--Optional:-->
+         <arg1>eins</arg1>
+      </onl:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://Online.debtcheck.de/OnlineIntegration/login"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="ab70aca6-95cd-446f-9d4f-865360c52581" isOneWay="false" action="" name="logout" bindingOperationName="logout" type="Request-Response" outputName="logoutResponse" inputName="logout" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="7649664b-c747-41e5-94bb-0d6c246ec8df" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:logout>
+         <arg0>?</arg0>
+      </onl:logout>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://Online.debtcheck.de/OnlineIntegration/logout"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="cd46ef08-1232-4bb8-8095-9365409e523c" isOneWay="false" action="" name="payDebt" bindingOperationName="payDebt" type="Request-Response" outputName="payDebtResponse" inputName="payDebt" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ffeb0aed-9cac-40d5-b80f-f78681c8f90f" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:payDebt>
+         <arg0>?</arg0>
+         <!--Optional:-->
+         <arg1>?</arg1>
+         <!--Optional:-->
+         <arg2>?</arg2>
+         <arg3>?</arg3>
+      </onl:payDebt>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://Online.debtcheck.de/OnlineIntegration/payDebt"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="59c8feeb-a060-42d1-9c84-d1933f61ac6a" isOneWay="false" action="" name="registerNewAccount" bindingOperationName="registerNewAccount" type="Request-Response" outputName="registerNewAccountResponse" inputName="registerNewAccount" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="32d4c5c4-6cc5-44bc-b971-1b49992cd76d" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:registerNewAccount>
+         <!--Optional:-->
+         <arg0>eins1</arg0>
+         <!--Optional:-->
+         <arg1>eins@web.de</arg1>
+         <!--Optional:-->
+         <arg2>eins</arg2>
+      </onl:registerNewAccount>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://Online.debtcheck.de/OnlineIntegration/registerNewAccount"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="75f09fe4-177e-46c5-9893-5bfad33a68e6" name="OnlineIntegrationServiceSoapBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="edea3992-c300-4dcd-a248-df0b80164eed" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Testszenario" searchProperties="true"><con:settings/><con:testStep type="request" id="59a02544-c5cd-460e-aad2-a86988ada029" name="registerNewAccount1"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>registerNewAccount</con:operation><con:request name="registerNewAccount1" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="5c2a656b-a9d0-4706-9084-fc0eadaf9f96"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:registerNewAccount>
+         <!--Optional:-->
+         <arg0>eddie1</arg0>
+         <!--Optional:-->
+         <arg1>eddie1@web.de</arg1>
+         <!--Optional:-->
+         <arg2>12345</arg2>
+      </onl:registerNewAccount>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="4485b513-9510-4aa8-a1e0-35e78d807a18" name="SOAP Response"/><con:assertion type="XPath Match" id="c63d1188-d454-445c-84fc-e5ded6d20866" name="username"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:registerNewAccountResponse/return/account/userName</path><content>eddie1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="be0af3fe-afc5-44bd-bef4-de486e8224ee" name="password"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:registerNewAccountResponse/return/account/password</path><content>12345</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="85e34edd-3a6c-4d69-a3f2-56eb3602639e" name="email"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:registerNewAccountResponse/return/account/email</path><content>eddie1@web.de</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="77ef3f01-1128-4417-be24-5798ff95cbc1" name="id"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:registerNewAccountResponse/return/account/id</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="9b1a1c12-5611-4ad4-88e2-4e806b35f36d" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:registerNewAccountResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://Online.debtcheck.de/OnlineIntegration/registerNewAccount"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer" id="48541671-f981-4426-8a42-a8c2d08908c9"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>emailtransfer</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>registerNewAccount1</con:sourceStep><con:sourcePath>//email</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>loginAccount1</con:targetStep><con:targetPath>//arg0</con:targetPath><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>passwordtransfer</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>registerNewAccount1</con:sourceStep><con:sourcePath>//password</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>loginAccount1</con:targetStep><con:targetPath>//arg1</con:targetPath><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" name="loginAccount1" id="f0bbc3f5-1844-4c02-8645-c8d893f10756"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>login</con:operation><con:request name="loginAccount1" id="3d62db0b-d29a-4087-afbc-f7f4461a050d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:login>
+         <!--Optional:-->
+         <arg0>eddie1@web.de</arg0>
+         <!--Optional:-->
+         <arg1>12345</arg1>
+      </onl:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="98de60f9-87a4-479a-906e-f7b8fee5f89f"/><con:assertion type="XPath Match" id="da10228a-dc93-45bc-9914-5ab0df8ae437" name="sessionId"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:loginResponse/return/sessionId</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="2d9bf348-03de-44c5-9f6d-58bdd7ac0af5" name="registerNewAccount2"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>registerNewAccount</con:operation><con:request name="registerNewAccount2" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="5c2a656b-a9d0-4706-9084-fc0eadaf9f96"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:registerNewAccount>
+         <!--Optional:-->
+         <arg0>josua1</arg0>
+         <!--Optional:-->
+         <arg1>josua1@web.de</arg1>
+         <!--Optional:-->
+         <arg2>12345</arg2>
+      </onl:registerNewAccount>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="4485b513-9510-4aa8-a1e0-35e78d807a18" name="SOAP Response"/><con:assertion type="XPath Match" id="c63d1188-d454-445c-84fc-e5ded6d20866" name="username"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:registerNewAccountResponse/return/account/userName</path><content>josua1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="be0af3fe-afc5-44bd-bef4-de486e8224ee" name="password"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:registerNewAccountResponse/return/account/password</path><content>12345</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="85e34edd-3a6c-4d69-a3f2-56eb3602639e" name="email"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:registerNewAccountResponse/return/account/email</path><content>josua1@web.de</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="77ef3f01-1128-4417-be24-5798ff95cbc1" name="id"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:registerNewAccountResponse/return/account/id</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="9b1a1c12-5611-4ad4-88e2-4e806b35f36d" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:registerNewAccountResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://Online.debtcheck.de/OnlineIntegration/registerNewAccount"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer 2" id="3f043dd6-00dc-449a-94d7-34794c78e65c"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>emailtransfer</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>registerNewAccount2</con:sourceStep><con:sourcePath>//email</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>loginAccount2</con:targetStep><con:targetPath>//arg0</con:targetPath><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>passwordtransfer</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>registerNewAccount2</con:sourceStep><con:sourcePath>//password</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>loginAccount2</con:targetStep><con:targetPath>//arg1</con:targetPath><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" name="loginAccount2" id="e5fde502-2588-4e80-b2c4-9e6d7d3cdcfd"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>login</con:operation><con:request name="loginAccount2" id="3d62db0b-d29a-4087-afbc-f7f4461a050d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:login>
+         <!--Optional:-->
+         <arg0>josua1@web.de</arg0>
+         <!--Optional:-->
+         <arg1>12345</arg1>
+      </onl:login>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="98de60f9-87a4-479a-906e-f7b8fee5f89f"/><con:assertion type="XPath Match" id="da10228a-dc93-45bc-9914-5ab0df8ae437" name="sessionId"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:loginResponse/return/sessionId</path><content>2</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" id="782f6e3f-8084-4775-8931-fa9be5ee348f" name="doppelterAccountDetection"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>registerNewAccount</con:operation><con:request name="doppelterAccountDetection" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="5c2a656b-a9d0-4706-9084-fc0eadaf9f96"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:registerNewAccount>
+         <!--Optional:-->
+         <arg0>eddie1</arg0>
+         <!--Optional:-->
+         <arg1>eddie1@web.de</arg1>
+         <!--Optional:-->
+         <arg2>12345</arg2>
+      </onl:registerNewAccount>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="4485b513-9510-4aa8-a1e0-35e78d807a18" name="SOAP Response"/><con:assertion type="Simple Contains" id="5d484b53-6014-4edb-a49c-257dcd172f91" name="Contains"><con:configuration><token>da der Username oder Email bereits existiert</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="XPath Match" id="d4d7b8b8-b7c2-45bb-9f46-296faca83ce9" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:registerNewAccountResponse/return/returnCode</path><content>30</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://Online.debtcheck.de/OnlineIntegration/registerNewAccount"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer 3" id="063e0897-90a8-44dd-a3e6-31169f717745"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>sessionId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount1</con:sourceStep><con:sourcePath>//sessionId</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>addNewDebtAccount1to2</con:targetStep><con:targetPath>//arg0</con:targetPath><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>userName</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount2</con:sourceStep><con:sourcePath>//userName</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>addNewDebtAccount1to2</con:targetStep><con:targetPath>//arg1</con:targetPath><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>sessionId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount1</con:sourceStep><con:sourcePath>//sessionId</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>addNewDebtAccount1to2 2</con:targetStep><con:targetPath>//arg0</con:targetPath><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>userName</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount2</con:sourceStep><con:sourcePath>//userName</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>addNewDebtAccount1to2 2</con:targetStep><con:targetPath>//arg1</con:targetPath><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="false" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>sessionId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount1</con:sourceStep><con:sourcePath>//sessionId</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>getMyClaimsAccount1</con:targetStep><con:targetPath>//arg0</con:targetPath><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="false" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>sessionId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount2</con:sourceStep><con:sourcePath>//sessionId</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>getMyDebtsAccount2</con:targetStep><con:targetPath>//arg0</con:targetPath><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="false" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>sessionId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount1</con:sourceStep><con:sourcePath>//sessionId</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>getMyClaimsAccount1 2</con:targetStep><con:targetPath>//arg0</con:targetPath><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="false" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>sessionId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount1</con:sourceStep><con:sourcePath>//sessionId</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>getMyClaimsAccount1 3</con:targetStep><con:targetPath>//arg0</con:targetPath><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="false" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>sessionId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount1</con:sourceStep><con:sourcePath>//sessionId</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>logoutAccount1</con:targetStep><con:targetPath>//arg0</con:targetPath><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="false" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>sessionId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount2</con:sourceStep><con:sourcePath>//sessionId</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>logoutAccount2</con:targetStep><con:targetPath>//arg0</con:targetPath><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" name="addNewDebtAccount1to2" id="6c57de25-83c9-4adc-bd1e-a23d18b4c4a9"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>addNewDebt</con:operation><con:request name="addNewDebtAccount1to2" id="f62ec77c-d377-4391-bd7b-7108fe5c9ad2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:addNewDebt>
+         <arg0>1</arg0>
+         <!--Optional:-->
+         <arg1>josua1</arg1>
+         <!--Optional:-->
+         <arg2>160.00</arg2>
+         <!--Optional:-->
+         <arg3>Mittagessen</arg3>
+      </onl:addNewDebt>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="b1e2e162-271d-473f-8170-13071a0e3dc1"/><con:assertion type="XPath Match" id="414bba87-84df-439b-85a6-23336b7b2605" name="id"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:addNewDebtResponse/return/debt/id</path><content>1</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="3310339b-914c-4ffc-9048-a07379ab868f" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:addNewDebtResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="ea2f766b-fb1a-4c5b-b987-b59a8ded2458" name="amount"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:addNewDebtResponse/return/debt/amount</path><content>160.00</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="addNewDebtAccount1to2 2" id="009c6b53-315a-4b46-818e-6b32ec94255a"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>addNewDebt</con:operation><con:request name="addNewDebtAccount1to2 2" id="f62ec77c-d377-4391-bd7b-7108fe5c9ad2"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:addNewDebt>
+         <arg0>1</arg0>
+         <!--Optional:-->
+         <arg1>josua1</arg1>
+         <!--Optional:-->
+         <arg2>50.00</arg2>
+         <!--Optional:-->
+         <arg3>Abendessen</arg3>
+      </onl:addNewDebt>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="b1e2e162-271d-473f-8170-13071a0e3dc1"/><con:assertion type="XPath Match" id="414bba87-84df-439b-85a6-23336b7b2605" name="id"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:addNewDebtResponse/return/debt/id</path><content>2</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="3310339b-914c-4ffc-9048-a07379ab868f" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:addNewDebtResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="ea2f766b-fb1a-4c5b-b987-b59a8ded2458" name="amount"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:addNewDebtResponse/return/debt/amount</path><content>50.00</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="getMyClaimsAccount1" id="e0ea93c0-b606-406b-8cd8-970667f2be3d"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>getMyClaims</con:operation><con:request name="getMyClaimsAccount1" id="f5ec6a23-3eb7-4386-b562-9d0ca13e6ed0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:getMyClaims>
+         <arg0>1</arg0>
+      </onl:getMyClaims>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="321e4bf1-a675-407c-a8b3-79d066ef4975"/><con:assertion type="Simple Contains" id="c9c63d5b-0e6e-4449-8f16-14e6f5fc8da4" name="Contains"><con:configuration><token>Mittagessen</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="e6604f1b-6c1a-4735-ab1e-54176a458fc2" name="Contains 2"><con:configuration><token>Abendessen</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="XPath Match" id="b7ed749e-7689-482c-817c-ad8457c3f13f" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:getMyClaimsResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="fa1a4478-c8a0-4ebd-947a-d1735b46f01b" name="claim1"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:getMyClaimsResponse/return/debtList[1]/amount</path><content>160.00</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="d54ae1fe-da8e-41c3-be7b-75416735b0bc" name="claim2"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:getMyClaimsResponse/return/debtList[2]/amount</path><content>50.00</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="transfer" name="Property Transfer 4" id="1543da24-9a6e-4c34-bf94-ed67d7c140f4"><con:settings/><con:config xsi:type="con:PropertyTransfersStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>sessionId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount2</con:sourceStep><con:sourcePath>//sessionId</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>payDebtAccount2to1</con:targetStep><con:targetPath>//arg0</con:targetPath><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>userName</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount1</con:sourceStep><con:sourcePath>//userName</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>payDebtAccount2to1</con:targetStep><con:targetPath>//arg1</con:targetPath><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" ignoreEmpty="false" transferToAll="false" entitize="false" transferChildNodes="false"><con:name>debtId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>addNewDebtAccount1to2</con:sourceStep><con:sourcePath>//id</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>payDebtAccount2to1</con:targetStep><con:targetPath>//arg3</con:targetPath><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="false" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>sessionId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount2</con:sourceStep><con:sourcePath>//sessionId</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>payDebtAccount2to1</con:targetStep><con:targetPath>//arg0</con:targetPath><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="false" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>userName</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>loginAccount1</con:sourceStep><con:sourcePath>//userName</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>payDebtAccount2to1</con:targetStep><con:targetPath>//arg1</con:targetPath><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers><con:transfers setNullOnMissingSource="true" transferTextContent="true" failOnError="true" disabled="false" entitize="false" ignoreEmpty="false" transferChildNodes="false" transferToAll="false" useXQuery="false"><con:name>debtId</con:name><con:sourceType>Response</con:sourceType><con:sourceStep>addNewDebtAccount1to2</con:sourceStep><con:sourcePath>//id</con:sourcePath><con:targetType>Request</con:targetType><con:targetStep>payDebtAccount2to1</con:targetStep><con:targetPath>//arg3</con:targetPath><con:type>XPATH</con:type><con:targetTransferType>XPATH</con:targetTransferType><con:upgraded>true</con:upgraded></con:transfers></con:config></con:testStep><con:testStep type="request" name="getMyDebtsAccount2" id="a9b98ab7-9638-4722-85d1-028c5c91e4c8"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>getMyClaims</con:operation><con:request name="getMyDebtsAccount2" id="f5ec6a23-3eb7-4386-b562-9d0ca13e6ed0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:getMyDebts>
+         <arg0>2</arg0>
+      </onl:getMyDebts>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="321e4bf1-a675-407c-a8b3-79d066ef4975"/><con:assertion type="Simple Contains" id="c9c63d5b-0e6e-4449-8f16-14e6f5fc8da4" name="Contains"><con:configuration><token>Mittagessen</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="e6604f1b-6c1a-4735-ab1e-54176a458fc2" name="Contains 2"><con:configuration><token>Abendessen</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="XPath Match" id="b7ed749e-7689-482c-817c-ad8457c3f13f" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:getMyDebtsResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="fa1a4478-c8a0-4ebd-947a-d1735b46f01b" name="debt1"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:getMyDebtsResponse/return/debtList[1]/amount</path><content>160.00</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="d54ae1fe-da8e-41c3-be7b-75416735b0bc" name="debt2"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:getMyDebtsResponse/return/debtList[2]/amount</path><content>50.00</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="payDebtAccount2to1" id="b355f9e5-74e9-4095-ac6b-1905115a2cb7"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>payDebt</con:operation><con:request name="payDebtAccount2to1" id="55cc42eb-5340-4249-ba9c-616cbe91f2a5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:payDebt>
+         <arg0>2</arg0>
+         <!--Optional:-->
+         <arg1>eddie1</arg1>
+         <!--Optional:-->
+         <arg2>20.00</arg2>
+         <arg3>1</arg3>
+      </onl:payDebt>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3e821af2-0a06-4bb5-8102-03aa2cfcdec3"/><con:assertion type="XPath Match" id="c87d3986-c571-4ef6-a358-569b298c87af" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:payDebtResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="de81d14e-e31a-47cd-bfcc-8cd30d488791" name="newAmount"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:payDebtResponse/return/newAmount</path><content>140.00</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="getMyClaimsAccount1 2" id="c982b91e-9ff3-47ea-a1c7-80cc0663e5b8"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>getMyClaims</con:operation><con:request name="getMyClaimsAccount1 2" id="f5ec6a23-3eb7-4386-b562-9d0ca13e6ed0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:getMyClaims>
+         <arg0>1</arg0>
+      </onl:getMyClaims>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="321e4bf1-a675-407c-a8b3-79d066ef4975"/><con:assertion type="Simple Contains" id="c9c63d5b-0e6e-4449-8f16-14e6f5fc8da4" name="Contains"><con:configuration><token>Mittagessen</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="e6604f1b-6c1a-4735-ab1e-54176a458fc2" name="Contains 2"><con:configuration><token>Abendessen</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="XPath Match" id="b7ed749e-7689-482c-817c-ad8457c3f13f" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:getMyClaimsResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="fa1a4478-c8a0-4ebd-947a-d1735b46f01b" name="claim1"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:getMyClaimsResponse/return/debtList[1]/amount</path><content>140.00</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="d54ae1fe-da8e-41c3-be7b-75416735b0bc" name="claim2"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:getMyClaimsResponse/return/debtList[2]/amount</path><content>50.00</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="payDebtAccount2to1 2" id="4bc711cf-b912-429d-af6a-b8cc423998e4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>payDebt</con:operation><con:request name="payDebtAccount2to1 2" id="55cc42eb-5340-4249-ba9c-616cbe91f2a5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:payDebt>
+         <arg0>2</arg0>
+         <!--Optional:-->
+         <arg1>eddie1</arg1>
+         <!--Optional:-->
+         <arg2>140.00</arg2>
+         <arg3>1</arg3>
+      </onl:payDebt>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="3e821af2-0a06-4bb5-8102-03aa2cfcdec3"/><con:assertion type="XPath Match" id="c87d3986-c571-4ef6-a358-569b298c87af" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:payDebtResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="de81d14e-e31a-47cd-bfcc-8cd30d488791" name="newAmount"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:payDebtResponse/return/newAmount</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="getMyClaimsAccount1 3" id="7b3d326b-701c-4773-a52a-1858a80ae2d3"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>getMyClaims</con:operation><con:request name="getMyClaimsAccount1 3" id="f5ec6a23-3eb7-4386-b562-9d0ca13e6ed0"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:getMyClaims>
+         <arg0>1</arg0>
+      </onl:getMyClaims>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="321e4bf1-a675-407c-a8b3-79d066ef4975"/><con:assertion type="Simple Contains" id="e6604f1b-6c1a-4735-ab1e-54176a458fc2" name="Contains 2"><con:configuration><token>Abendessen</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="XPath Match" id="b7ed749e-7689-482c-817c-ad8457c3f13f" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:getMyClaimsResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="XPath Match" id="fa1a4478-c8a0-4ebd-947a-d1735b46f01b" name="claim1"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:getMyClaimsResponse/return/debtList[1]/amount</path><content>50.00</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="Simple NotContains" id="94548f3a-bae6-4ac3-b150-478c134dd103" name="Not Contains"><con:configuration><token>Mittagessen</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="logoutAccount1" id="b5d65a29-e2a8-43b0-84dd-c4110647572a"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>logout</con:operation><con:request name="logoutAccount1" id="6b7adeaa-a9b7-4931-8b71-e2c14d61658d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:logout>
+         <arg0>1</arg0>
+      </onl:logout>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e73f7a96-d5b9-45c3-a321-3fdc09190e18"/><con:assertion type="XPath Match" id="b9478cbb-46b1-48f6-a56d-67039398434c" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:logoutResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="logoutAccount2" id="201119d2-1823-4d16-a010-f2fd74ee504a"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>OnlineIntegrationServiceSoapBinding</con:interface><con:operation>logout</con:operation><con:request name="logoutAccount2" id="6b7adeaa-a9b7-4931-8b71-e2c14d61658d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/debtcheck/OnlineIntegration</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:onl="http://Online.debtcheck.de/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <onl:logout>
+         <arg0>2</arg0>
+      </onl:logout>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="e73f7a96-d5b9-45c3-a321-3fdc09190e18"/><con:assertion type="XPath Match" id="b9478cbb-46b1-48f6-a56d-67039398434c" name="returnCode"><con:configuration><path>declare namespace debtcheck='http://Online.debtcheck.de/';
+//debtcheck:logoutResponse/return/returnCode</path><content>0</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
