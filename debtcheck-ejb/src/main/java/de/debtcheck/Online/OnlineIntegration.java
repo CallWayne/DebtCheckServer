@@ -2,10 +2,11 @@ package de.debtcheck.Online;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.jws.WebService;
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
@@ -13,11 +14,9 @@ import org.jboss.ws.api.annotation.WebContext;
 import de.debtcheck.dao.debtcheckDAOLocal;
 import de.debtcheck.dto.DebtListResponse;
 import de.debtcheck.dto.DtoAssembler;
-import de.debtcheck.dto.FriendListResponse;
 import de.debtcheck.dto.PayDebtResponsee;
 import de.debtcheck.dto.ReturnCodeResponse;
 import de.debtcheck.dto.UserLoginResponse;
-import de.debtcheck.dto.AddFriendResponsee;
 import de.debtcheck.dto.AddNewDebtResponsee;
 import de.debtcheck.entities.Account;
 import de.debtcheck.entities.Debt;
@@ -56,15 +55,14 @@ public UserLoginResponse registerNewAccount(String userName, String password, St
 	try {
 		Account user = dao.createAccount(userName, password, email);		
 		if (user != null) {
-			//create new session for the just created customer:
 			logger.info("Registrierung von \"" + userName + "\" erfolgreich. ");
 			response.setAccount(this.dtoAssembler.makeDTO(user));
 			response.setSessionId(0);
 		}
 		else {
-			logger.info("Registrieren fehlgeschlagen, da der Username oder Email bereits existiert."
+			logger.info("Registrieren fehlgeschlagen, da der Username oder die Emailadresse bereits existiert."
 					  + " username=" + userName);
-			throw new DebtCheckException(30, "Registrieren fehlgeschlagen, da der Username oder Email "
+			throw new DebtCheckException(30, "Registrieren fehlgeschlagen, da der Username oder die Emailadresse "
 					  + "bereits existiert. username=" + userName);
 		}
 	}
@@ -110,7 +108,7 @@ public DebtListResponse getMyDebts(int sessionId) {
 		Session session = getSession(sessionId);
 		List<Debt> accountList = session.getUser().getDebts();
 		response.setDebtList(dtoAssembler.makeDebtDTO(accountList));
-		logger.info("Result of getMyAccounts(): "+accountList);		
+		logger.info("Ergebnis von getMyAccounts(): "+accountList);		
 	}
 	catch (DebtCheckException e) {
 		response.setReturnCode(e.getErrorCode());
@@ -125,7 +123,7 @@ public DebtListResponse getMyClaims(int sessionId) {
 		Session session = getSession(sessionId);
 		List<Debt> accountList = session.getUser().getClaims();
 		response.setDebtList(dtoAssembler.makeDebtDTO(accountList));
-		logger.info("Result of getMyClaims(): "+accountList);		
+		logger.info("Ergebnis von getMyClaims(): "+accountList);		
 	}
 	catch (DebtCheckException e) {
 		response.setReturnCode(e.getErrorCode());
@@ -134,7 +132,7 @@ public DebtListResponse getMyClaims(int sessionId) {
 	return response;
 }
 
-
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigDecimal amount, String reason){
 	AddNewDebtResponsee response = new AddNewDebtResponsee();
 	try {
@@ -159,6 +157,8 @@ public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigD
 	return response;
 	}
 
+
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public PayDebtResponsee payDebt (int sessionId, String creditorAccount, BigDecimal amount, int id){
 	PayDebtResponsee response = new PayDebtResponsee();
 	try{
@@ -188,40 +188,46 @@ public PayDebtResponsee payDebt (int sessionId, String creditorAccount, BigDecim
 		}
 			return response;
 	}
+
+
 /**
-	public AddFriendResponsee addFriend(int sessionId, String userName){
-		AddFriendResponsee response = new AddFriendResponsee();
-		try{
-			Session session = getSession(sessionId);
-			Account account = session.getUser();
-			Account friend = this.dao.findAccountByName(userName);
-			if(account!=null && friend!= null){
-				account.addFriend(friend);
-				response.setFriendName(friend.getUserName());
-			}
-		}
-			catch (DebtCheckException e) {
-				response.setReturnCode(e.getErrorCode());
-				response.setMessage(e.getMessage());
-			}
-				return response;
-		
+    public FriendListResponse getMyFriends(int sessionId){
+	FriendListResponse response = new FriendListResponse();
+	try {
+		Session session = getSession(sessionId);
+		Set<Account> friendList = session.getUser().getFriends();
+		response.setFriendList(dtoAssembler.makeAccountDTO(friendList));
+		logger.info("Result of getMyClaims(): "+friendList);		
 	}
+	catch (DebtCheckException e) {
+		response.setReturnCode(e.getErrorCode());
+		response.setMessage(e.getMessage());
+	}
+	return response;
+}
+
+public AddFriendResponsee addFriend (int sessionId, String friendName){
+	AddFriendResponsee response = new AddFriendResponsee();
+	try {
+		Session session = getSession(sessionId);
+		Account user = session.getUser();
+		Friend friend = dao.createFriend(user, friendName);
+		if (user!=null && friend!=null) {
+			user.addFriend(friend);
+			...
+		}
+	}
+	catch (DebtCheckException e) {
+		response.setReturnCode(e.getErrorCode());
+		response.setMessage(e.getMessage());
+	}
+	return response;
+	}
+
+public AddFriendResponsee removeFriend (int sessionId, ){
 	
-	public FriendListResponse getMyFriends(int sessionId){
-		FriendListResponse response = new FriendListResponse();
-		try {
-			Session session = getSession(sessionId);
-			Set<Account> friendList = session.getUser().getFriends();
-			response.setFriendList(dtoAssembler.makeAccountDTO(friendList));
-			logger.info("Result of getMyClaims(): "+friendList);		
-		}
-		catch (DebtCheckException e) {
-			response.setReturnCode(e.getErrorCode());
-			response.setMessage(e.getMessage());
-		}
-		return response;
-	}
-	*/
+}
+*/
+
 
 }

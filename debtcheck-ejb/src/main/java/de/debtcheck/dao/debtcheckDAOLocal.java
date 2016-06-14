@@ -19,6 +19,12 @@ public interface debtcheckDAOLocal {
 	public Debt createDebt(Account debtor, Account creditor, BigDecimal amount, String reason);
 	public void removeDebt(int debtId);
 	
+	/**
+	public Friend createFriend(Account owner, String userName);
+	public void removeFriend(int friendId);
+	*/
+	
+	
 }
 	
 	
