@@ -31,8 +31,6 @@ public class Account implements Serializable {
 	private Map<Integer, Debt> debts;
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="creditor") @MapKey
 	private Map<Integer, Debt> claims;
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="owner") @MapKey
-	private Map<Integer, Friend> friends;
 	
 	
 	public Account (){}
@@ -43,7 +41,6 @@ public class Account implements Serializable {
 		this.password = password;
 		this.debts = new HashMap<Integer, Debt>();
 		this.claims = new HashMap<Integer, Debt>();
-		this.friends = new HashMap<Integer, Friend>();
 		this.email = email;
 	}
 	
@@ -53,10 +50,6 @@ public class Account implements Serializable {
 	
 	public void addNewClaim(Debt newClaim) {
 		this.claims.put(newClaim.getId(), newClaim);
-	}
-	
-	public void addFriend(Friend friend) {
-		this.friends.put(friend.getId(), friend);
 	}
 	
 	public String getUserName() {
@@ -97,14 +90,6 @@ public class Account implements Serializable {
 	
 	public Debt getFriendById(int FriendId) {
 		return claims.get(FriendId);
-	}
-	
-	public List<Friend> getFriends() {
-		return new ArrayList<Friend>(friends.values());
-	}
-	
-	public void removeFriend(int id){
-		friends.remove(id);
 	}
 	
 	public int getId() {

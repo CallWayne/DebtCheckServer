@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 
 import de.debtcheck.entities.Account;
 import de.debtcheck.entities.Debt;
-import de.debtcheck.entities.Friend;
 import de.debtcheck.entities.Session;
 
 
@@ -69,7 +68,6 @@ public class debtcheckDAO implements debtcheckDAOLocal {
 			return user;
 		}
 		else {
-			//Return null, if username already exists.
 			return null;
 		}
 	}
@@ -80,18 +78,6 @@ public class debtcheckDAO implements debtcheckDAOLocal {
 			return debt;
 		}
 	
-	public Friend createFriend(Account owner, String userName) {
-		Friend friend = new Friend(owner, userName);
-		em.persist(friend);	
-		return friend;
-	}
-	
-	public void removeFriend(int friendId) {
-    	Friend friend = em.find(Friend.class, friendId);
-    	if (friend != null) {
-    		em.remove(friend);
-    	}
-	}
 	
 	public void refreshDebt(int debtId){
 		Debt debt = em.find(Debt.class, debtId);

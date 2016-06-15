@@ -188,46 +188,4 @@ public PayDebtResponsee payDebt (int sessionId, String creditorAccount, BigDecim
 		}
 			return response;
 	}
-
-
-/**
-    public FriendListResponse getMyFriends(int sessionId){
-	FriendListResponse response = new FriendListResponse();
-	try {
-		Session session = getSession(sessionId);
-		Set<Account> friendList = session.getUser().getFriends();
-		response.setFriendList(dtoAssembler.makeAccountDTO(friendList));
-		logger.info("Result of getMyClaims(): "+friendList);		
-	}
-	catch (DebtCheckException e) {
-		response.setReturnCode(e.getErrorCode());
-		response.setMessage(e.getMessage());
-	}
-	return response;
-}
-
-public AddFriendResponsee addFriend (int sessionId, String friendName){
-	AddFriendResponsee response = new AddFriendResponsee();
-	try {
-		Session session = getSession(sessionId);
-		Account user = session.getUser();
-		Friend friend = dao.createFriend(user, friendName);
-		if (user!=null && friend!=null) {
-			user.addFriend(friend);
-			...
-		}
-	}
-	catch (DebtCheckException e) {
-		response.setReturnCode(e.getErrorCode());
-		response.setMessage(e.getMessage());
-	}
-	return response;
-	}
-
-public AddFriendResponsee removeFriend (int sessionId, ){
-	
-}
-*/
-
-
 }
