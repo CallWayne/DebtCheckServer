@@ -1,5 +1,7 @@
 package de.debtcheck.Online;
 
+import static org.junit.Assert.assertEquals;
+
 import java.math.BigDecimal;
 
 import javax.ejb.EJB;
@@ -12,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.debtcheck.dto.AddNewDebtResponsee;
+import de.debtcheck.dto.DebtTO;
 import de.debtcheck.dto.PayDebtResponsee;
 import de.debtcheck.dto.UserLoginResponse;
 
@@ -41,14 +44,13 @@ import de.debtcheck.dto.UserLoginResponse;
 			UserLoginResponse loginResponse = bean.login("max@mail.de", "max123");
 			int sessionId = loginResponse.getSessionId();
 		    AddNewDebtResponsee addNewDebtResponse = bean.addNewDebt(sessionId, "Paul", new BigDecimal(100.55), "ein Grund");
-		    int debtId = addNewDebtResponse.getDebt().getId();
 		    bean.logout(sessionId);
 		    UserLoginResponse loginResponse2 = bean.login("paul@mail.de", "paul123");
 		    int sessionId2 = loginResponse2.getSessionId();
-		    PayDebtResponsee payDebtResponse = bean.payDebt(sessionId2, "Max", new BigDecimal(55.55), debtId);
+		    PayDebtResponsee payDebtResponse = bean.payDebt(sessionId2, "Max", new BigDecimal(55.55), 1);
 		    bean.logout(sessionId2);
-		    assert payDebtResponse.getReturnCode()==0 : "Bezahlung fehlgeschlagen";
-		    assert payDebtResponse.getNewAmount()==new BigDecimal(45) : "Falsche Restsumme";
+		    assertEquals(payDebtResponse.getReturnCode(), 0);
+		    assertEquals(payDebtResponse.getNewAmount(), new BigDecimal(45));
 			}
 	}
 

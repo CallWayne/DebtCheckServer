@@ -1,6 +1,8 @@
 package de.debtcheck.Online;
 
 
+import static org.junit.Assert.assertEquals;
+
 import javax.ejb.EJB;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -35,7 +37,7 @@ public class RegisterNewAccountTest {
 	public void testRegister() throws Exception{
 		    bean.registerNewAccount("Max", "max123", "max@mail.de");
 		    UserLoginResponse loginResponse = bean.login("max@mail.de", "max123");  
-		     assert loginResponse.getReturnCode()==0 : "Registrierung fehlgeschlagen";
+		    assertEquals(loginResponse.getReturnCode(), 0);
 		 	
 		    int sessionId = loginResponse.getSessionId();
 			bean.logout(sessionId);

@@ -35,7 +35,7 @@ public class LoginTest {
 	public void testLogin() throws Exception{
 		     bean.registerNewAccount("Max", "max123", "max@mail.de");
 		     UserLoginResponse loginResponse = bean.login("max@mail.de", "max123");
-		     assert loginResponse.getReturnCode()==0 : "Login fehlgeschlagen";
+		     assertEquals(loginResponse.getReturnCode(), 0);
 		 	
 		    int sessionId = loginResponse.getSessionId();
 			bean.logout(sessionId);

@@ -62,7 +62,7 @@ public UserLoginResponse registerNewAccount(String userName, String password, St
 		else {
 			logger.info("Registrieren fehlgeschlagen, da der Username oder die Emailadresse bereits existiert."
 					  + " username=" + userName);
-			throw new DebtCheckException(30, "Registrieren fehlgeschlagen, da der Username oder die Emailadresse "
+			throw new InvalidRegisterException("Registrieren fehlgeschlagen, da der Username oder die Emailadresse "
 					  + "bereits existiert. username=" + userName);
 		}
 	}
@@ -132,7 +132,7 @@ public DebtListResponse getMyClaims(int sessionId) {
 	return response;
 }
 
-@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+//@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigDecimal amount, String reason){
 	AddNewDebtResponsee response = new AddNewDebtResponsee();
 	try {
@@ -158,7 +158,7 @@ public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigD
 	}
 
 
-@TransactionAttribute(TransactionAttributeType.MANDATORY)
+//@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public PayDebtResponsee payDebt (int sessionId, String creditorAccount, BigDecimal amount, int id){
 	PayDebtResponsee response = new PayDebtResponsee();
 	try{

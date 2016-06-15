@@ -1,5 +1,7 @@
 package de.debtcheck.Online;
 
+import static org.junit.Assert.assertEquals;
+
 import java.math.BigDecimal;
 
 import javax.ejb.EJB;
@@ -40,7 +42,8 @@ public class AddNewDebtTest {
     			UserLoginResponse loginResponse = bean.login("max@mail.de", "max123");
     			int sessionId = loginResponse.getSessionId();
     		    AddNewDebtResponsee addDebtResponse = bean.addNewDebt(sessionId, "Paul", new BigDecimal(100.55), "ein Grund");
-    		    assert addDebtResponse.getReturnCode()==0 : "Registrierung fehlgeschlagen";
+    		    assertEquals(addDebtResponse.getReturnCode(), 0);
+    		    assertEquals(addDebtResponse.getNewAmount(), new BigDecimal(100.55));
     		 
     			bean.logout(sessionId);
     		}
