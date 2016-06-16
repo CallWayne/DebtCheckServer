@@ -107,8 +107,14 @@ public DebtListResponse getMyDebts(int sessionId) {
 	try {
 		Session session = getSession(sessionId);
 		List<Debt> accountList = session.getUser().getDebts();
+		if(session != null && accountList != null){
 		response.setDebtList(dtoAssembler.makeDebtDTO(accountList));
-		logger.info("Ergebnis von getMyAccounts(): "+accountList);		
+		logger.info("Ergebnis von getMyAccounts(): "+accountList);
+		}
+		else {
+			logger.info("Keine Session oder keine accountList vorhanden");
+			throw new NoListException("Keine Session oder keine accountList vorhanden");
+		}
 	}
 	catch (DebtCheckException e) {
 		response.setReturnCode(e.getErrorCode());
@@ -122,8 +128,14 @@ public DebtListResponse getMyClaims(int sessionId) {
 	try {
 		Session session = getSession(sessionId);
 		List<Debt> accountList = session.getUser().getClaims();
+		if(session != null && accountList != null){
 		response.setDebtList(dtoAssembler.makeDebtDTO(accountList));
 		logger.info("Ergebnis von getMyClaims(): "+accountList);		
+	}
+	else {
+		logger.info("Keine Session oder keine accountList vorhanden");
+		throw new NoListException("Keine Session oder keine accountList vorhanden");
+		}
 	}
 	catch (DebtCheckException e) {
 		response.setReturnCode(e.getErrorCode());
@@ -149,6 +161,10 @@ public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigD
 			logger.info(message);
 			outputRequester.debtAddNotification(message);
 		}
+		else {
+			logger.info("Kein Schuldner und/oder Gläubiger vorhanden");
+			throw new DebtException("Kein Schuldner und/oder Gläubiger vorhanden");
+			}
 	}
 	catch (DebtCheckException e) {
 		response.setReturnCode(e.getErrorCode());
@@ -180,6 +196,10 @@ public PayDebtResponsee payDebt (int sessionId, String creditorAccount, BigDecim
 				response.setNewAmount(debt.getAmount());
 			}
 			return response;
+		}
+		else {
+			logger.info("Kein Schuldner und/oder Gläubiger vorhanden");
+			throw new PayDebtException("Kein Schuldner und/oder Gläubiger vorhanden");			
 		}
 	}
 		catch (DebtCheckException e) {
