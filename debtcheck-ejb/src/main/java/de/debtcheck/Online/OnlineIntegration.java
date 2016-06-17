@@ -23,7 +23,12 @@ import de.debtcheck.entities.Debt;
 import de.debtcheck.entities.Session;
 
 
-
+/**
+ * 
+ * @author Josua Suren
+ * @author Edgar Seibel
+ *
+ */
 
 @WebService
 @WebContext(contextRoot="/debtcheck")
@@ -41,6 +46,12 @@ private DtoAssembler dtoAssembler;
 @EJB
 private OutputRequesterBean outputRequester;
 
+/**
+ * Gibt die aktuelle Session zurück
+ * @param sessionId
+ * @return session
+ * @throws NoSessionException wenn keine Session vorhanden ist
+ */
 private Session getSession(int sessionId) throws NoSessionException {
 	Session session = dao.findSessionById(sessionId);
 	if (session==null)
@@ -49,7 +60,14 @@ private Session getSession(int sessionId) throws NoSessionException {
 		return session;
 	}
 
-
+/**
+ * Methode zum registrieren eines neuen Accounts
+ * @param userName Benutzername
+ * @param password Passwort des Benutzers
+ * @param email E-Mail des Benutzers
+ * @return UserLoginResponse wird bei erfolgreichem registrieren zurückgegeben
+ * @throws InvalidRegisterException wird geworfen bei fehlerhaftem registrieren, da Benutzername oder E-Mail Adresse bereits vergeben ist
+ */
 public UserLoginResponse registerNewAccount(String userName, String password, String email) {
 	UserLoginResponse response = new UserLoginResponse();
 	try {
@@ -73,6 +91,13 @@ public UserLoginResponse registerNewAccount(String userName, String password, St
 	return response;		
 }
 
+/**
+ * Methode für den Login eines bestehenden Accounts
+ * @param email E-Mail des Benutzers
+ * @param password Password des Benutzers
+ * @return UserLoginResponse wird bei erfolgreichem login zurückgegeben
+ * @throws InvalidLoginException wird geworfen bei fehlerhaftem login, da E-Mail oder Password des Benutzers falsch sind
+ */
 public UserLoginResponse login(String email, String password) {
 	UserLoginResponse response = new UserLoginResponse();
 	try {
@@ -95,6 +120,11 @@ public UserLoginResponse login(String email, String password) {
 	return response;
 	}
 
+/**
+ * Methode zum ausloggen eines eingeloggten Accounts
+ * @param sessionId die sessionId der aktuellen Session des Benutzers
+ * @return ReturnCodeResponse mit einem ReturnCode der angibt ob alles fehlerfrei durchgelaufen ist oder einen Fehlercode zurückgibt
+ */
 public ReturnCodeResponse logout(int sessionId) {
 	dao.closeSession(sessionId);
 	ReturnCodeResponse response = new ReturnCodeResponse();
@@ -102,6 +132,12 @@ public ReturnCodeResponse logout(int sessionId) {
 	return response;
 	}
 
+/**
+ * Methode um eine Liste mit allen Schulden des eingeloggten Benutzers wiederzugeben
+ * @param sessionId die sessionId der aktuellen Session des Benutzers
+ * @return DebtListResponse gibt eine Liste aller Schulden zurück
+ * @throws NoListException wird geworfen wenn keine Session oder keine Liste vorhanden ist
+ */
 public DebtListResponse getMyDebts(int sessionId) {
 	DebtListResponse response = new DebtListResponse();
 	try {
@@ -123,6 +159,12 @@ public DebtListResponse getMyDebts(int sessionId) {
 	return response;
 }
 
+/**
+ * Methode um eine Liste mit allen Forderungen des eingeloggten Benutzers wiederzugeben
+ * @param sessionId die sessionId der aktuellen Session des Benutzers
+ * @return DebtListResponse gibt eine Liste aller Forderungen zurück
+ * @throws NoListException wird geworfen wenn keine Session oder keine Liste vorhanden ist
+ */
 public DebtListResponse getMyClaims(int sessionId) {
 	DebtListResponse response = new DebtListResponse();
 	try {
@@ -144,7 +186,15 @@ public DebtListResponse getMyClaims(int sessionId) {
 	return response;
 }
 
-//@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+/**
+ * Methode um eine neue Schuld für den Benutzer hinzuzufügen
+ * @param sessionId die sessionId der aktuellen Session des Benutzers
+ * @param debtorAccount der Benutzername des Schuldner Accounts
+ * @param amount die Höhe der Schuld
+ * @param reason der Grund der Schuld
+ * @return AddNewDebtResponse wird mit den aufgelistenen Eingaben der erstellten Schuld zurückgegeben
+ * @throws DebtException wird geworfen wenn der Schuldner nicht vorhanden ist
+ */
 public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigDecimal amount, String reason){
 	AddNewDebtResponsee response = new AddNewDebtResponsee();
 	try {
@@ -174,7 +224,15 @@ public AddNewDebtResponsee addNewDebt (int sessionId, String debtorAccount, BigD
 	}
 
 
-//@TransactionAttribute(TransactionAttributeType.MANDATORY)
+/**
+ * Methode um eine bestehende Schuld zurückzuzahlen
+ * @param sessionId die sessionId der aktuellen Session des Benutzers
+ * @param creditorAccount der Benutzername des Gläubiger Accounts
+ * @param amount die Höhe des zurückgezahlten Betrags
+ * @param id die ID der Schuld die zurückgezahlt wird
+ * @return PayDebtResponse wird mit den aufgelistenen Eingaben der gezahlten Schuld zurückgegeben
+ * @throws DebtException wird geworfen wenn der Schuldner nicht vorhanden ist
+ */
 public PayDebtResponsee payDebt (int sessionId, String creditorAccount, BigDecimal amount, int id){
 	PayDebtResponsee response = new PayDebtResponsee();
 	try{

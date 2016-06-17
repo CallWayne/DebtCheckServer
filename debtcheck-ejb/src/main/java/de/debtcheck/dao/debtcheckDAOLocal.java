@@ -6,10 +6,15 @@ import javax.ejb.Local;
 
 import de.debtcheck.entities.*;
 
-
+/**
+ * 
+ * @author Josua Suren
+ * @author Edgar Seibel
+ *
+ */
 @Local
 public interface debtcheckDAOLocal {
-	
+
 	public Session findSessionById(int id);
 	public int createSession(Account user);
 	public void closeSession(int id);

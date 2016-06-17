@@ -5,7 +5,13 @@ import java.math.BigDecimal;
 import de.debtcheck.entities.Account;
 
 
-
+/**
+ * TransferObject für die Klasse Debt
+ * 
+ * @author Josua Suren
+ * @author Edgar Seibel
+ *
+ */
 public class DebtTO extends DataTransferObject {
 	
 	private static final long serialVersionUID = 3440740273700082798L;
@@ -21,6 +27,13 @@ public class DebtTO extends DataTransferObject {
 	
 	public DebtTO() {}
 
+	/**
+	 * 
+	 * @param debtor Schuldner
+	 * @param creditor Gläubiger
+	 * @param amount die Höhe der Schuld
+	 * @param reason der Grund der Schuld
+	 */
 	public DebtTO(String debtor , String creditor, BigDecimal amount, String reason) {
 		super();
 		this.setDebtor(debtor);
