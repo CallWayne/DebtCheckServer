@@ -13,7 +13,7 @@ import org.jboss.logging.Logger;
 @MessageDriven(
 		activationConfig = { 
 				@ActivationConfigProperty(
-				propertyName = "destination", propertyValue = "java:/jms/queue/DebtAddQueue"), 
+				propertyName = "destination", propertyValue = "java:/jms/queue/Queue1"), 
 				@ActivationConfigProperty(
 				propertyName = "destinationType", propertyValue = "javax.jms.Queue"),
 				@ActivationConfigProperty(
@@ -29,7 +29,7 @@ public class OutputRequesterProcessor implements MessageListener {
 	public void onMessage(Message message) {
        try {
     	  TextMessage msg = (TextMessage) message;
-          logger.info("Received message from jms/queue/DebtAddQueue: " + msg.getText());
+          logger.info("Received message from java:/jms/queue/Queue1: " + msg.getText());
        }
        catch (JMSException e) {
             throw new EJBException(e);
