@@ -36,7 +36,7 @@ public class debtcheckDAO implements debtcheckDAOLocal {
     }
 	
 	/**
-	 * Methode persistiert  eine Session in der Datenbank
+	 * Methode persistiert eine Session in der Datenbank
 	 * @param user Account des Benutzers
 	 * @return SessionId
 	 */
