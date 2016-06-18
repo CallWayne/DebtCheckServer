@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.jws.WebService;
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
