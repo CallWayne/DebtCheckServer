@@ -11,9 +11,10 @@ import de.debtcheck.entities.Account;
 import de.debtcheck.entities.Debt;
 
 /**
+ * DTOAssembler
  * 
- * @author Edgar Seibel
- * @æuthor Josua Suren
+ * @author Josua Suren
+ * @æuthor Edgar Seibel
  *
  */
 @Stateless

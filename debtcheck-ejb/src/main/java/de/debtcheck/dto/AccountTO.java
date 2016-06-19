@@ -15,7 +15,7 @@ import de.debtcheck.entities.Debt;
 public class AccountTO extends DataTransferObject{
 	
 	/**
-	 * 
+	 * Attribute
 	 */
 	private static final long serialVersionUID = 1L;
 	
@@ -26,9 +26,13 @@ public class AccountTO extends DataTransferObject{
 	private HashMap<Integer,Debt> debts;
 	private HashMap<Integer,Debt> claims;
 	
+	/**
+	 * leerer Konstruktor
+	 */
 	public AccountTO()  {
 	}
 	/**
+	 * Konstruktor
 	 * 
 	 * @param id ID des Accounts
 	 * @param userName Benuztername

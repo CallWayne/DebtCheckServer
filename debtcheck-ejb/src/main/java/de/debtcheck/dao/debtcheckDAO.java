@@ -12,6 +12,7 @@ import de.debtcheck.entities.Debt;
 import de.debtcheck.entities.Session;
 
 /**
+ * DAO Klasse
  * 
  * @author Josua Suren
  * @author Edgar Seibel

@@ -11,10 +11,16 @@ import java.util.List;
  */
 public class DebtListResponse extends ReturnCodeResponse {
 
+	/**
+	 * Attribute
+	 */
 	private static final long serialVersionUID = -5754928488884226775L;
 
 	private List<DebtTO> debtList;
 	
+	/**
+	 * leerer Konstruktor
+	 */
 	public DebtListResponse() {
 	}
 

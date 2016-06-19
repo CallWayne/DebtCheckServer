@@ -14,12 +14,15 @@ public class PayDebtResponsee extends ReturnCodeResponse {
 
 
 	/**
-	 * 
+	 * Attribute
 	 */
 	private static final long serialVersionUID = 1L;
 	
 	private BigDecimal newAmount;
 	
+	/**
+	 * leerer Konstruktor
+	 */
 	public PayDebtResponsee() {
 	}
 

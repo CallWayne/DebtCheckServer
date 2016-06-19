@@ -7,6 +7,7 @@ import javax.ejb.Local;
 import de.debtcheck.entities.*;
 
 /**
+ * DAO Interface
  * 
  * @author Josua Suren
  * @author Edgar Seibel

@@ -41,7 +41,7 @@ public class Claim implements Serializable {
 	 * @param id
 	 * @param creditor Gläubiger
 	 * @param debtor Schuldner
-	 * @param amount die Höhe der Schuld
+	 * @param amount die Höhe der Forderung
 	 */
 	public Claim(int id, Account creditor, Account debtor, BigDecimal amount) {
 		this.id = id;
@@ -67,7 +67,7 @@ public class Claim implements Serializable {
 	}
 	
 	/**
-	 * Methode zum Abfragen des Gläubigers zur Schuld
+	 * Methode zum Abfragen des Gläubigers zur Forderung
 	 * @return Account des Gläubigers
 	 */
 	public Account getCreditor() {
@@ -75,7 +75,7 @@ public class Claim implements Serializable {
 	}
 	
 	/**
-	 * Methode zum Abfragen des Schuldners zur Schuld
+	 * Methode zum Abfragen des Schuldners zur Forderung
 	 * @return Account des Schuldners
 	 */
 	public Account getDebtor() {

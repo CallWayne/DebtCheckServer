@@ -12,17 +12,23 @@ import java.math.BigDecimal;
  */
 public class ClaimTO extends DataTransferObject {
 	
+	/**
+	 * Attribute
+	 */
 	private static final long serialVersionUID = 3440740273700082798L;
 	
 	private int id;
 	private BigDecimal amount;
 	private int ownerId;
 	
-	
+	/**
+	 * leerer Konstruktor
+	 */
 	public ClaimTO() {
 	}
 
 	/**
+	 * Konstruktor
 	 * 
 	 * @param id ID der Forderung
 	 * @param amount Höhe der Forderung

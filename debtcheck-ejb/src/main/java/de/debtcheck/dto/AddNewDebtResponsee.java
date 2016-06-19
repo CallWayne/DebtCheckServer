@@ -14,13 +14,16 @@ public class AddNewDebtResponsee extends ReturnCodeResponse {
 
 
 	/**
-	 * 
+	 * Attribute
 	 */
 	private static final long serialVersionUID = 1L;
 	
 	private DebtTO debt;
 	private BigDecimal newAmount;
 	
+	/**
+	 * leerer Konstruktor
+	 */
 	public AddNewDebtResponsee() {
 	}
 

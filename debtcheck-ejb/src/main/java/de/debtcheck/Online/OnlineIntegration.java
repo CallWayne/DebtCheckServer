@@ -33,6 +33,9 @@ import de.debtcheck.entities.Session;
 @Stateless
 public class OnlineIntegration {
 	
+	/**
+	 * Attribute
+	 */
 private static final Logger logger = Logger.getLogger(OnlineIntegration.class);
 
 @EJB
@@ -45,7 +48,7 @@ private DtoAssembler dtoAssembler;
 private OutputRequesterBean outputRequester;
 
 /**
- * Gibt die aktuelle Session zurück
+ * Methode gibt die aktuelle Session zurück
  * @param sessionId
  * @return session
  * @throws NoSessionException wenn keine Session vorhanden ist

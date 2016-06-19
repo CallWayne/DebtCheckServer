@@ -14,6 +14,9 @@ import de.debtcheck.entities.Account;
  */
 public class DebtTO extends DataTransferObject {
 	
+	/**
+	 * Attribute
+	 */
 	private static final long serialVersionUID = 3440740273700082798L;
 	
 	
@@ -24,7 +27,9 @@ public class DebtTO extends DataTransferObject {
 	private String creditor;
 
 	
-	
+	/**
+	 * leerer Konstruktor
+	 */
 	public DebtTO() {}
 
 	/**
