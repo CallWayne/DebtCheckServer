@@ -14,7 +14,7 @@ import de.debtcheck.entities.Debt;
  * DTOAssembler
  * 
  * @author Josua Suren
- * @æuthor Edgar Seibel
+ * @author Edgar Seibel
  *
  */
 @Stateless
